@@ -1,0 +1,273 @@
+<section style="height: 100vh; ">
+  <div class="cardContainer" style="display: flex;justify-content: center;margin-top: 3%;">
+  <mat-card style="width: 80%; background: hsla(0, 0%, 0%, 0.637); color: rgb(255, 255, 255); border-radius: 30px; box-shadow: 0 8px 16px 0 rgb(199, 113, 113);">
+    <h1 class="text-4xl font-sans text-center mt-2 p-5">
+      Añade tu propia receta
+    </h1>
+    <mat-divider style="width: 95%; margin: auto; color: white;"></mat-divider>
+    <form [formGroup]="checkoutForm" (ngSubmit)="onSubmit()">
+      <div class="formLayout">
+        <div class="parte1">
+        <p>Título de la nueva receta:</p>
+        <div class="categoryField">
+           <mat-form-field style="width: 70%;">
+              <mat-label>Ej.: Pollo agridulce</mat-label>
+              <input matInput type="text" formControlName="recetaTitle" required />
+           </mat-form-field>
+           <mat-form-field>
+            <mat-label>Carne...</mat-label>
+            <mat-select #form (valueChange)="onSelected(form.value)">
+              <mat-option disabled="">Seleccione una opción</mat-option>
+              @for (food of foods; track food) {
+              <mat-option [value]="food.value">
+                {{ food.viewValue }}</mat-option
+              >
+              }
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="cookingTimeField">
+          <p>Tiempo de preparación (Minutos...):</p>
+          <div class="minnutes">
+            <mat-form-field>
+              <mat-label>Introduce...</mat-label>
+              <input matInput type="number" formControlName="tCocinado"/>
+            </mat-form-field>
+          </div>
+          
+        </div>
+        <p>Añade cada uno de los ingredientes</p>
+        <div class="ingredientsField">
+          <mat-form-field style="width: 90%;">
+            <mat-label>Ex: Pork</mat-label>
+            <input matInput formControlName="ingredient"/>
+            <mat-error *ngIf="!isValidField('ingredient')">{{ getFieldError('ingredient') }}</mat-error>
+          </mat-form-field>
+          <button type="button" (click)="addItem()" style="height: fit-content; margin-top: 1.2%;">
+            <img src="../../../../assets/images/add.png" alt="" />
+          </button>
+        </div>
+        @if (meals.length > 0) {
+          <div style="width: 90%">
+            <mat-card>
+              <mat-card-content>
+                <ul>
+                  @for (meal of meals; track $index) {
+                  <li style="color: black;">
+                    <div style="display: flex; align-items: center; gap: 16px">
+                      <img src="../../../../assets/images/record.png" alt="" />{{
+                        meal.ingredient
+                      }}
+                      <div style="text-align: right; flex: auto;">
+                        <button
+                        mat-flat-button
+                        type="button"
+                        color="warn"
+                        (click)="deleteIng($index)"
+                      >
+                        X
+                      </button>
+                    
+                      </div>
+                      </div>
+                  </li>
+                  @if (
+                  !(meals[$index] == meals[meals.length-1])
+                  ) {<mat-divider style="margin: 8px;"></mat-divider>
+                }
+                  }
+                </ul>
+              </mat-card-content>
+            </mat-card>
+          </div>
+        }
+      </div>
+      <div class="parte2">
+        <p>Añade los pasos de la receta</p>
+        <div class="stepsField">
+          <mat-form-field style="width: 90%;">
+            <mat-label></mat-label>
+            <input matInput formControlName="step"/>
+            <mat-error *ngIf="!isValidField('step')">{{ getFieldError('step') }}</mat-error>
+          </mat-form-field>
+          <button type="button" (click)="addStep()" style="height: fit-content; margin-top: 1.2%;">
+            <img src="../../../../assets/images/add.png" alt="" />
+          </button>
+        </div>
+        @if (steps.length > 0) {
+          <div style="width: 95%">
+            <mat-card>
+              <mat-card-content>
+                <ul>
+                  @for (step of steps; track $index) {
+                  <li style="color: black;">
+                    <div style="display: flex; align-items: center; gap: 16px">
+                      <span style="font-weight: bold;">Paso {{$index+1}}.</span> {{step.step}}
+                      <div style="text-align: right; flex: auto;">
+                        <button
+                        mat-flat-button
+                        type="button"
+                        color="warn"
+                        (click)="deleteStep($index)"
+                      >
+                        X
+                      </button>
+                    
+                      </div>
+                      </div>
+                  </li>
+                  @if (
+                  !(steps[$index] == steps[steps.length-1])
+                  ) {<mat-divider style="margin: 8px;"></mat-divider>
+                }
+                  }
+                </ul>
+              </mat-card-content>
+            </mat-card>
+          </div>
+        }
+      </div>
+      </div>
+      <div>
+        <button type="submit" id="botonWelcome">Guardar</button>
+      </div>
+      
+      
+      <!--      
+      <div style="margin-left: 1%; margin-block-start: 5%; width: 100%">
+        <table style="width: 100%;">
+          <tr>
+            <td>
+              <label class="text-xl" for="textoForm"
+                >Indica la categoría de la nueva receta:
+              </label>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <mat-form-field
+                required
+                class="example-full-width"
+                style="height: 70px; width: 50%"
+              >
+                <mat-label>Ex: Pork with sauce</mat-label>
+                <input matInput type="text" formControlName="recetaTitle" required />
+              </mat-form-field>
+              <mat-form-field style="margin-left: 1%; height: 70px">
+                <mat-label>Category</mat-label>
+                <mat-select #form (valueChange)="onSelected(form.value)">
+                  <mat-option>Seleccione una opción</mat-option>
+                  @for (food of foods; track food) {
+                  <mat-option [value]="food.value">
+                    {{ food.viewValue }}</mat-option
+                  >
+                  }
+                </mat-select>
+              </mat-form-field>
+            </td>
+          </tr>
+        </table>
+      </div>
+
+      <div style="margin-left: 1%; width: 100%; margin-block-end: 1%;">
+        <label class="text-xl" for="textoForm">
+          Tiempo de cocinado: 
+        </label>
+        <mat-form-field style="height: 70px; width: 10%;">
+          <input matInput type="number" formControlName="tCocinado"/>
+        </mat-form-field>
+        <label class="text-xl"> Min.</label>
+      </div>
+
+      <div style="margin-left: 1%; width: 100%">
+        <table style="width: 100%;" cellspacing="0">
+          <tr>
+            <td>
+              <label class="text-xl" for="textoForm">Ingredientes: </label>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <mat-form-field
+                class="example-full-width"
+                style="height: 70px; width: 90%;"
+              >
+                <mat-label>Ex: Pork</mat-label>
+                <input matInput formControlName="ingredient"/>
+                <mat-error *ngIf="!isValidField('ingredient')">{{ getFieldError('ingredient') }}</mat-error>
+              </mat-form-field>
+              <button type="button" (click)="addItem()" style="margin-left: 10px">
+                <img src="../../../../assets/images/add.png" alt="" />
+              </button>
+            </td>
+          </tr>
+        </table>
+      </div>
+
+      @if (meals.length > 0) {
+      <div style="margin-left: 2%; width: 96%" class="text-xl">
+        <mat-card>
+          <mat-card-content class="mt-2">
+            <ul>
+              @for (meal of meals; track $index) {
+              <li style="margin-bottom: 3px; width: 100%;">
+                <div style="display: flex; align-items: center; gap: 16px">
+                  <img src="../../../../assets/images/record.png" alt="" />{{
+                    meal.ingredient
+                  }}
+                  &nbsp; x{{ meal.quantity }} &nbsp;
+                  <div style="text-align: right; flex: auto;">
+                    <button
+                    mat-flat-button
+                    type="button"
+                    color="warn"
+                    (click)="deleteIng($index)"
+                  >
+                    X
+                  </button>
+                
+                  </div>
+                  </div>
+              </li>
+              @if (
+              !(meals[$index] == meals[meals.length-1])
+              ) {<mat-divider style="margin-bottom: 3px;"></mat-divider>
+            }
+              }
+            </ul>
+          </mat-card-content>
+        </mat-card>
+      </div>
+
+      }
+      <table  style="margin-left: 1%; margin-top:2%; width: 100%; margin-block-end: 5%;" cellspacing="0">
+        <tr>
+          <td>
+            <label class="text-xl" for="textoForm"
+              >Descripción de la receta</label
+            >
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <mat-form-field style="width: 96%;">
+              <mat-label>Escribe aquí...</mat-label>
+              <textarea
+                matInput
+                cdkTextareaAutosize
+                #autosize="cdkTextareaAutosize"
+                cdkAutosizeMinRows="1"
+                cdkAutosizeMaxRows="5"
+                formControlName="descReceta"
+              ></textarea>
+            </mat-form-field>
+          </td>
+        </tr>
+      </table>
+      <div>
+        <button type="submit" id="botonWelcome">Guardar</button>
+      </div>-->
+    </form>
+  </mat-card>
+</div>
+</section>

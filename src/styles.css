@@ -1,0 +1,28 @@
+@import url('https://fonts.googleapis.com/css?family=Poppins:700|Poppins:400');
+
+/* You can add global styles to this file, and also import other style files */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+html, body { height: 100%; }
+/*body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; } */
+body { margin: 0; font-family: 'Poppins';
+    background: #fdf2f4;
+    }
+
+h1, h2, h3, h4, h5 {
+    font-family: 'Poppins';
+    font-weight: 700;
+  }
+  
+  html {font-size: 100%;}
+/*
+  . {
+    --text: #1a0308;
+--background: #fdf2f4;
+--primary: #e3244e;
+--secondary: #eee877;
+--accent: #cae956;
+
+  }
+  */

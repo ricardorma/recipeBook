@@ -1,0 +1,39 @@
+<h1 class="text-4xl font-sans text-center mt-2 p-5">Recetas archivadas</h1>
+<hr>
+
+<section>
+    <div style="padding: 16px; margin-block-start: 2%; width: 100%;">
+        <label class="text-xl" for="textoForm">Filtrar por: </label>
+        <mat-form-field style="margin-left: 9px; height: 70px;">
+            <mat-label>Category</mat-label>
+            <mat-select #form (valueChange)="onSelected(form.value)">
+                <mat-option>Seleccione una opción</mat-option>
+              @for (food of foods; track food) {
+                <mat-option [value]="food.value"> {{food.viewValue}}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+    </div>
+</section>
+
+<section>
+    @if (loading) {
+        <mat-spinner style="margin: 16px auto;" [color]="color"></mat-spinner>
+    } @else if ( comida.length === 0 && loading) {
+        <div class="alert alert-warning text-center">
+            No hay ninguna receta guardada
+        </div>
+    } @else {
+        <div class="grid grid-cols-4 gap-4 p-8">
+        <app-card></app-card>
+        <app-card></app-card>
+        <app-card></app-card>
+        <app-card></app-card>
+        <app-card></app-card>
+        <app-card></app-card>
+        <app-card></app-card>
+        <app-card></app-card>
+    </div>
+    }
+    
+</section>
