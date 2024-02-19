@@ -1,1 +1,31 @@
-<p>recipe works!</p>
+<h1 class="text-4xl font-sans text-center mt-2 p-5">Filetito</h1>
+
+<section>
+    <div class="infoRecipe">
+        <img class="w-max" style="border-radius: 30%; width: 35%;" src="../../../../assets/images/chef.jpg" alt="" />
+        <table mat-table style="width: 45%; min-width: 1%;" [dataSource]="dataSource" class="mat-elevation-z8">
+
+            <!-- Position Column -->
+            <ng-container matColumnDef="position">
+              <th mat-header-cell *matHeaderCellDef> No. </th>
+              <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+            </ng-container>
+          
+            <!-- Name Column -->
+            <ng-container matColumnDef="name">
+              <th mat-header-cell *matHeaderCellDef> Ingredientes </th>
+              <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+            </ng-container>
+          
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+        <div class="content">
+            @for (item of exampleRecipe.steps; track $index) {
+                <h4>Paso {{$index}}</h4>
+                <p>{{item.description}}</p>
+            }
+        </div>
+        
+    </div>
+</section>

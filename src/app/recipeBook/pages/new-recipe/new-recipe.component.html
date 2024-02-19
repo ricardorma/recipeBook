@@ -15,7 +15,7 @@
               <input matInput type="text" formControlName="recetaTitle" required />
            </mat-form-field>
            <mat-form-field>
-            <mat-label>Carne...</mat-label>
+            <mat-label>Categoría...</mat-label>
             <mat-select #form (valueChange)="onSelected(form.value)">
               <mat-option disabled="">Seleccione una opción</mat-option>
               @for (food of foods; track food) {
@@ -26,8 +26,8 @@
             </mat-select>
           </mat-form-field>
         </div>
+        <p>Tiempo de preparación (Minutos...):</p>
         <div class="cookingTimeField">
-          <p>Tiempo de preparación (Minutos...):</p>
           <div class="minnutes">
             <mat-form-field>
               <mat-label>Introduce...</mat-label>
