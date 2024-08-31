@@ -1,0 +1,92 @@
+<section class="min-h-screen flex items-center justify-center">
+  <div class="w-full max-w-3xl bg-red-50 text-gray-800 rounded-3xl shadow-lg p-6">
+    <h2 class="text-center text-2xl font-bold mb-4">Añade tu propia receta</h2>
+    <form [formGroup]="recetaForm" (ngSubmit)="onSubmit()">
+      <div class="space-y-6">
+        <!-- Título y tiempo de preparación -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="flex flex-col">
+            <label for="titulo" class="mb-1">Título de la receta</label>
+            <input id="titulo" formControlName="titulo" type="text" class="p-3 border border-gray-300 rounded-lg" placeholder="" />
+          </div>
+          <div class="flex flex-col">
+            <label for="preparacion" class="mb-1">Tiempo de preparación (Minutos):</label>
+            <input id="preparacion" formControlName="preparacion" type="number" class="p-3 border border-gray-300 rounded-lg" placeholder="" />
+          </div>
+        </div>
+
+        <!-- Categoría -->
+        <div class="flex flex-col">
+          <label for="categoria" class="mb-1">Categoría</label>
+          <select id="select-form" formControlName="categoria" class="p-3 border border-gray-300 rounded-lg">
+            <option value="" disabled selected>Seleccione una opción</option>
+            @for (food of foods; track food) {
+              <option [value]="food.value">{{ food.viewValue }}</option>
+            }
+          </select>
+        </div>
+
+        <!-- Ingredientes -->
+        <div class="flex flex-col">
+          <label for="ingredientes" class="mb-1">Ingredientes</label>
+          <div class="flex gap-2 items-center">
+            <input id="ingredientes" formControlName="ingredientes" type="text" class="flex-grow p-3 border border-gray-300 rounded-lg" placeholder="" />
+            <button type="button" (click)="addItem()" class="px-4 py-2 bg-pink-500 text-white rounded-lg shadow-md hover:bg-pink-600">Añadir</button>
+          </div>
+
+          <!-- Lista de ingredientes -->
+          @if (ingMeal.length > 0) {
+            <div class="mt-4 w-full">
+              <div class="bg-white rounded-lg shadow-md p-4">
+                <ul class="space-y-2">
+                  @for (meal of ingMeal; track $index) {
+                    <li class="flex justify-between items-center border-b pb-2">
+                      <span>{{ meal.ingredient }}</span>
+                      <button type="button" (click)="removeIngrediente($index)" class="text-pink-600 font-bold">X</button>
+                    </li>
+                  }
+                </ul>
+              </div>
+            </div>
+          }
+        </div>
+
+        <!-- Pasos -->
+        <div class="flex flex-col">
+          <label for="pasos" class="mb-1">Pasos</label>
+          <div class="flex gap-2 items-center">
+            <input id="pasos" formControlName="pasos" type="text" class="flex-grow p-3 border border-gray-300 rounded-lg" placeholder="" />
+            <button type="button" (click)="addPaso()" class="px-4 py-2 bg-pink-500 text-white rounded-lg shadow-md hover:bg-pink-600">Añadir</button>
+          </div>
+
+          <!-- Lista de pasos -->
+          @if (steps.length > 0) {
+            <div class="mt-4 w-full">
+              <div class="bg-white rounded-lg shadow-md p-4">
+                <ul class="space-y-2">
+                  @for (step of steps; track $index) {
+                    <li class="flex justify-between items-center border-b pb-2">
+                      <span class="font-bold">Paso {{$index+1}}.</span> {{step.step}}
+                      <button type="button" (click)="removePaso($index)" class="text-pink-600 font-bold">X</button>
+                    </li>
+                  }
+                </ul>
+              </div>
+            </div>
+          }
+        </div>
+
+        <!-- Subir foto -->
+        <div class="flex flex-col">
+          <label for="categoria" class="mb-1">Sube tu foto</label>
+          <input type="file" class="p-3 border border-gray-300 rounded-lg" accept="image/png, image/gif, image/jpeg" />
+        </div>
+      </div>
+
+      <!-- Botón de guardar -->
+      <div class="text-center mt-6">
+        <button type="submit" class="px-6 py-2 bg-pink-500 text-white rounded-lg shadow-md hover:bg-pink-600">Guardar</button>
+      </div>
+    </form>
+  </div>
+</section>

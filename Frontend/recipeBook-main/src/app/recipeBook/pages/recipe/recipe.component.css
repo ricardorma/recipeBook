@@ -1,0 +1,62 @@
+.infoRecipe {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 30px; /* Reducido para una mejor apariencia en pantallas pequeñas */
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+/* Centrar el texto de las celdas */
+td, th {
+    text-align: center;
+}
+
+/* Margen inferior para párrafos */
+p {
+    margin-bottom: 1rem;
+}
+
+/* Estilos responsivos */
+@media (max-width: 768px) {
+    .infoRecipe {
+        padding: 10px;
+    }
+
+    img {
+        width: 80%; /* Hacemos que la imagen ocupe más espacio en pantallas pequeñas */
+        border-radius: 20%;
+    }
+
+    table {
+        width: 100%; /* Ajuste del ancho de la tabla para pantallas pequeñas */
+    }
+
+    h4 {
+        font-size: 1.2rem;
+    }
+
+    p {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    img {
+        width: 90%; /* Aumenta el ancho para móviles más pequeños */
+        border-radius: 15%;
+    }
+
+    h4 {
+        font-size: 1rem;
+    }
+
+    p {
+        font-size: 0.9rem;
+    }
+}
