@@ -6,12 +6,12 @@ export const routes: Routes = [
     title: 'My Recipe Book' ,
     loadComponent: () => import('./recipeBook/pages/layout-recipe/layout-recipe.component'),
     children: [
-      {
+      /*{
         path: 'global-recipes',
         title: 'My Recipe Book' ,
         loadComponent: () =>
           import('./recipeBook/pages/global-recipes/global-recipes.component'),
-      },
+      },*/
 
       {
         path: 'my-recipes',

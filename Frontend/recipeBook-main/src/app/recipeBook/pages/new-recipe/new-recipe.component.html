@@ -1,4 +1,4 @@
-<section class="min-h-screen flex items-center justify-center">
+<section class="mt-10 flex items-center justify-center">
   <div class="w-full max-w-3xl bg-red-50 text-gray-800 rounded-3xl shadow-lg p-6">
     <h2 class="text-center text-2xl font-bold mb-4">Añade tu propia receta</h2>
     <form [formGroup]="recetaForm" (ngSubmit)="onSubmit()">
@@ -37,7 +37,7 @@
           <!-- Lista de ingredientes -->
           @if (ingMeal.length > 0) {
             <div class="mt-4 w-full">
-              <div class="bg-white rounded-lg shadow-md p-4">
+              <div class="bg-white rounded-lg shadow-md p-4 max-h-[150px] overflow-y-scroll">
                 <ul class="space-y-2">
                   @for (meal of ingMeal; track $index) {
                     <li class="flex justify-between items-center border-b pb-2">
@@ -62,7 +62,7 @@
           <!-- Lista de pasos -->
           @if (steps.length > 0) {
             <div class="mt-4 w-full">
-              <div class="bg-white rounded-lg shadow-md p-4">
+              <div class="bg-white rounded-lg shadow-md p-4 max-h-[150px] overflow-y-scroll">
                 <ul class="space-y-2">
                   @for (step of steps; track $index) {
                     <li class="flex justify-between items-center border-b pb-2">

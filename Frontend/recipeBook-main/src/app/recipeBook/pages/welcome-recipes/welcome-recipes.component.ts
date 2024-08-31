@@ -30,7 +30,7 @@ export default class WelcomeRecipesComponent{
     const scrollPosition = window.scrollY || document.documentElement.scrollTop || document.body.scrollTop || 0;
     // Check if user scrolled to a certain position to trigger loading of sections
  
-    if (scrollPosition > 500) {
+    if (scrollPosition > 50) {
       this.section3Visible = true;
     }
   }

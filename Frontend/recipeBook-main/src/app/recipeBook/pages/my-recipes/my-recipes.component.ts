@@ -36,7 +36,7 @@ export default class MyRecipesComponent implements OnInit{
     {value: 'tacos', viewValue: 'Tacos'},
   ];
 
-  comida: string[] = [];
+  recetas: string[] = [];
 
   onSelected(value:string):void {
     console.log(value);
