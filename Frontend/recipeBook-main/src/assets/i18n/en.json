@@ -1,0 +1,52 @@
+{
+    "WELCOME_PAGE" : {
+        "INTRO_TITLE1" : "Save your favorite recipes",
+        "ELABORATE" : "Elaborate",
+        "INTRO_MESSAGE" : "Don't let any recipe be left off the menu. Record everything you make so the rest of the world can test your cooking skills.",
+        "BUTTONS" : {
+            "START" : "Start",
+            "EXPLORE": "Explore"
+        },
+        "INTRO_TITLE2" : "Search for your best recipes and prepare your best menu",
+        "DISCOVER" : "Discover",
+        "INTRO_MESSAGE2" : "Try our recipe search system where you can find your favorite recipes or even the most visited ones"
+    },
+    "NEW_RECIPE" : {
+        "INTRO_TITLE": "Add your own recipe",
+        "TITLE" : "Title of the recipe",
+        "COOKING_TIME" : "Preparation time (Minutes)",
+        "CATEGORY": "Category",
+        "CHOOSE": "Select an option",
+        "INGREDIENTS": "Ingredients",
+        "BUTTONS": {
+            "ADD": "Add",
+            "SAVE": "Save"
+        },
+        "STEPS": "Steps",
+        "STEP": "Step",
+        "UPLOAD_PHOTO": "Upload your photo",
+        "SELECT_FILE": "Select file"
+    },
+    "RECIPE": {
+        "STEP": "Step",
+        "INGREDIENTS": "Ingredients"
+    },
+    "MY_RECIPES" : {
+        "STORED_RECIPES": "Your recipes",
+        "FILTER_BY": "Filter by: ",
+        "CATEGORY": "Category",
+        "CHOOSE": "Select an option"
+    },
+    "CATEGORIES": {
+        "CARNE": "Meat",
+        "PESCADO": "Fish",
+        "PASTA": "Pasta",
+        "ARROZ": "Rice",
+        "PURE": "Purees",
+        "ENSALADA": "Salad",
+        "POSTRE": "Dessert",
+        "SOPA": "Soup",
+        "BEBIDA": "Drink",
+        "MARISCO": "Seafood"
+  }
+}

@@ -1,19 +1,19 @@
 import { Component, HostListener  } from '@angular/core';
-import { CardComponent } from '../../components/card/card.component';
 
 import { BreakpointObserver } from '@angular/cdk/layout';
 import {MatDividerModule} from '@angular/material/divider';
+import {TranslateModule} from '@ngx-translate/core'; 
 
 @Component({
   selector: 'app-welcome-recipes',
   standalone: true,
-  imports: [CardComponent, MatDividerModule],
+  imports: [MatDividerModule, TranslateModule],
   templateUrl: './welcome-recipes.component.html',
   styleUrl: './welcome-recipes.component.css'
 })
 export default class WelcomeRecipesComponent{
   
-  section3Visible = false;
+  section3Visible = true;
 
   constructor(private breakpointObserver: BreakpointObserver) {}
 
@@ -29,9 +29,9 @@ export default class WelcomeRecipesComponent{
 
     const scrollPosition = window.scrollY || document.documentElement.scrollTop || document.body.scrollTop || 0;
     // Check if user scrolled to a certain position to trigger loading of sections
- 
-    if (scrollPosition > 50) {
-      this.section3Visible = true;
+    this.section3Visible = true;
+    if (scrollPosition > 20) {
+      
     }
   }
 }

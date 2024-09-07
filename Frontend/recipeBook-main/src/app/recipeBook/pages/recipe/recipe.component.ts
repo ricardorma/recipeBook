@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import {MatTableModule} from '@angular/material/table';
+import {TranslateModule} from '@ngx-translate/core'; 
 
 export interface PeriodicElement {
   name: string;
@@ -30,7 +31,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
 @Component({
   selector: 'app-recipe',
   standalone: true,
-  imports: [MatTableModule],
+  imports: [MatTableModule, TranslateModule],
   templateUrl: './recipe.component.html',
   styleUrl: './recipe.component.css'
 })

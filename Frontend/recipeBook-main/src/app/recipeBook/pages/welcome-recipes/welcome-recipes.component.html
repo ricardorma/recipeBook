@@ -19,17 +19,15 @@
       <div class="sectionCreate">
         <div class="createP1">
           <h1 class="text-5xl font-sans">
-            Guarda tus recetas favoritas
+            {{ 'WELCOME_PAGE.INTRO_TITLE1' | translate}}
           </h1>
             <div class="container" >
-              <h2 class="text-3xl font-sans text">Elabora</h2>
+              <h2 class="text-3xl font-sans text">{{ 'WELCOME_PAGE.ELABORATE' | translate}}</h2>
             </div>
             <p class="break-words">
-              No dejes que ninguna receta quede fuera del menú. Registra todo lo que
-              elaboras para que el resto del mundo pueda probar tus habilidades
-              culinarias.
+              {{ 'WELCOME_PAGE.INTRO_MESSAGE' | translate}}
             </p>
-            <a href="/recipe-book/new-recipe" id="botonWelcome">Comienza</a>
+            <a href="/recipe-book/new-recipe" id="botonWelcome">{{ 'WELCOME_PAGE.BUTTONS.START' | translate}}</a>
         </div>
         <div class="createP2 ">
           <img class="w-max" style="border-radius: 30%; width: 80%" src="../../../../assets/images/chef.jpg" alt="" />
@@ -51,21 +49,19 @@
         </div>
         <div class="exploreP2">
           <h1 class="text-5xl font-sans">
-            Encuentra nuevas recetas y añádelas a tu menú personal
+            {{ 'WELCOME_PAGE.INTRO_TITLE2' | translate}}
           </h1>
             <div class="container">
-              <h2 class="text-3xl font-sans text">Descubre</h2>
+              <h2 class="text-3xl font-sans text">{{ 'WELCOME_PAGE.DISCOVER' | translate}}</h2>
             </div>
             <p class="break-words">
-              Prueba nuestro sistema de búsqueda de recetas donde puedes encuentrar
-              gran diversidad de platos e incluso la oportunidad de chatear con
-              nuestra IA personal
+              {{ 'WELCOME_PAGE.INTRO_MESSAGE2' | translate}}
             </p>
-            <a href="/recipe-book/new-recipe" id="botonWelcome">Explora</a
+            <a href="/recipe-book/new-recipe" id="botonWelcome">{{ 'WELCOME_PAGE.BUTTONS.EXPLORE' | translate}}</a
             >
         </div>
       </div>
   </section>
-  <mat-divider _ngcontent-ng-c1799311822="" role="separator" class="mat-divider mat-divider-horizontal" style="width: 95%;margin: auto;/* color: black; *//* border-style: dotted; */height: 10px;background: bisque; margin-top: 1rem;" aria-orientation="horizontal"></mat-divider>
+  <!-- <mat-divider _ngcontent-ng-c1799311822="" role="separator" class="mat-divider mat-divider-horizontal" style="width: 95%;margin: auto;/* color: black; *//* border-style: dotted; */height: 10px;background: bisque; margin-top: 1rem;" aria-orientation="horizontal"></mat-divider> -->
 }
 

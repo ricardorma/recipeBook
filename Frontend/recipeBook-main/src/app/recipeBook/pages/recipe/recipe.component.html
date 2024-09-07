@@ -13,7 +13,7 @@
           
             <!-- Name Column -->
             <ng-container matColumnDef="name">
-              <th mat-header-cell *matHeaderCellDef> Ingredientes </th>
+              <th mat-header-cell *matHeaderCellDef> {{ 'RECIPE.INGREDIENTS' | translate}} </th>
               <td mat-cell *matCellDef="let element"> {{element.name}} </td>
             </ng-container>
           
@@ -22,7 +22,7 @@
           </table>
         <div class="content">
             @for (item of exampleRecipe.steps; track $index) {
-                <h4>Paso {{$index}}</h4>
+                <h4>{{ 'RECIPE.STEP' | translate}} {{$index}}</h4>
                 <p>{{item.description}}</p>
             }
         </div>

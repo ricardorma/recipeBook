@@ -1,0 +1,25 @@
+@if(isOpen) {
+    <div class="fixed inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-center z-50">
+        <div class="bg-white rounded-lg shadow-lg p-6 w-full max-w-md relative">
+            <button class="absolute top-0 right-0 m-3 text-gray-700" (click)="closeModal()">
+                <i class="fas fa-times"></i>
+              </button>
+              <h2 class="text-2xl font-bold mb-4 text-center">Iniciar Sesión</h2>
+          
+              <!-- Botón de login con Google -->
+              <button (click)="loginWithGoogle()" class="w-full mb-3 bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 flex items-center justify-center">
+                <i class="fab fa-google mr-2"></i> <!-- Ícono de Google -->
+                Login con Google
+              </button>
+          
+              <!-- Botón de login con GitHub -->
+              <button (click)="loginWithGitHub()" class="w-full bg-gray-800 text-white py-2 px-4 rounded hover:bg-gray-900 flex items-center justify-center">
+                <i class="fab fa-github mr-2"></i> <!-- Ícono de GitHub -->
+                Login con GitHub
+              </button>
+        </div>
+    </div>
+  
+}
+
+  

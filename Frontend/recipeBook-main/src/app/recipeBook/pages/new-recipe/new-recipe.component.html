@@ -1,39 +1,58 @@
 <section class="mt-10 flex items-center justify-center">
   <div class="w-full max-w-3xl bg-red-50 text-gray-800 rounded-3xl shadow-lg p-6">
-    <h2 class="text-center text-2xl font-bold mb-4">Añade tu propia receta</h2>
+    <h2 class="text-center text-2xl font-bold mb-4">{{ 'NEW_RECIPE.INTRO_TITLE' | translate}}</h2>
     <form [formGroup]="recetaForm" (ngSubmit)="onSubmit()">
       <div class="space-y-6">
         <!-- Título y tiempo de preparación -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div class="flex flex-col">
-            <label for="titulo" class="mb-1">Título de la receta</label>
+            <label for="titulo" class="mb-1">{{ 'NEW_RECIPE.TITLE' | translate}}</label>
             <input id="titulo" formControlName="titulo" type="text" class="p-3 border border-gray-300 rounded-lg" placeholder="" />
+            @if(isControlInvalid('titulo')) {
+                <span class="text-red-500 text-sm">
+                  {{ formErrors['titulo'][0] }}
+                </span>
+            }
           </div>
           <div class="flex flex-col">
-            <label for="preparacion" class="mb-1">Tiempo de preparación (Minutos):</label>
+            <label for="preparacion" class="mb-1">{{ 'NEW_RECIPE.COOKING_TIME' | translate}}</label>
             <input id="preparacion" formControlName="preparacion" type="number" class="p-3 border border-gray-300 rounded-lg" placeholder="" />
+            @if(isControlInvalid('preparacion')) {
+              <span class="text-red-500 text-sm">
+                {{ formErrors['preparacion'][0] }}
+              </span>
+            }
           </div>
         </div>
 
         <!-- Categoría -->
         <div class="flex flex-col">
-          <label for="categoria" class="mb-1">Categoría</label>
+          <label for="categoria" class="mb-1">{{ 'NEW_RECIPE.CATEGORY' | translate}}</label>
           <select id="select-form" formControlName="categoria" class="p-3 border border-gray-300 rounded-lg">
-            <option value="" disabled selected>Seleccione una opción</option>
-            @for (food of foods; track food) {
-              <option [value]="food.value">{{ food.viewValue }}</option>
+            <option value="" disabled selected>{{ 'NEW_RECIPE.CHOOSE' | translate}}</option>
+            @for (category of categories; track category) {
+              <option [value]="category"> {{ 'CATEGORIES.' + category | translate }}</option>
             }
           </select>
+          @if(isControlInvalid('categoria')) {
+            <span class="text-red-500 text-sm">
+              {{ formErrors['categoria'][0] }}
+            </span>
+          }
         </div>
 
         <!-- Ingredientes -->
         <div class="flex flex-col">
-          <label for="ingredientes" class="mb-1">Ingredientes</label>
+          <label for="ingredientes" class="mb-1">{{ 'NEW_RECIPE.INGREDIENTS' | translate}}</label>
           <div class="flex gap-2 items-center">
-            <input id="ingredientes" formControlName="ingredientes" type="text" class="flex-grow p-3 border border-gray-300 rounded-lg" placeholder="" />
-            <button type="button" (click)="addItem()" class="px-4 py-2 bg-pink-500 text-white rounded-lg shadow-md hover:bg-pink-600">Añadir</button>
+            <input id="ingredientes" formControlName="ingrediente" type="text" class="flex-grow p-3 border border-gray-300 rounded-lg" placeholder="" />
+            <button type="button" (click)="addItem()" class="px-4 py-2 bg-pink-500 text-white rounded-lg shadow-md hover:bg-pink-600">{{ 'NEW_RECIPE.BUTTONS.ADD' | translate}}</button>
           </div>
-
+          @if(recetaForm.get('ingrediente')?.touched && ingMeal.length == 0 ) {
+            <span class="text-red-500 text-sm">
+              Introduce al menos un ingrediente
+            </span>
+          }
           <!-- Lista de ingredientes -->
           @if (ingMeal.length > 0) {
             <div class="mt-4 w-full">
@@ -53,12 +72,16 @@
 
         <!-- Pasos -->
         <div class="flex flex-col">
-          <label for="pasos" class="mb-1">Pasos</label>
+          <label for="pasos" class="mb-1">{{ 'NEW_RECIPE.STEPS' | translate}}</label>
           <div class="flex gap-2 items-center">
-            <input id="pasos" formControlName="pasos" type="text" class="flex-grow p-3 border border-gray-300 rounded-lg" placeholder="" />
-            <button type="button" (click)="addPaso()" class="px-4 py-2 bg-pink-500 text-white rounded-lg shadow-md hover:bg-pink-600">Añadir</button>
+            <input id="pasos" formControlName="paso" type="text" class="flex-grow p-3 border border-gray-300 rounded-lg" placeholder="" />
+            <button type="button" (click)="addPaso()" class="px-4 py-2 bg-pink-500 text-white rounded-lg shadow-md hover:bg-pink-600">{{ 'NEW_RECIPE.BUTTONS.ADD' | translate}}</button>
           </div>
-
+          @if(steps.length == 0 && recetaForm.get('paso')?.touched) {
+            <span class="text-red-500 text-sm">
+              Introduce al menos un paso
+            </span>
+          }
           <!-- Lista de pasos -->
           @if (steps.length > 0) {
             <div class="mt-4 w-full">
@@ -66,7 +89,7 @@
                 <ul class="space-y-2">
                   @for (step of steps; track $index) {
                     <li class="flex justify-between items-center border-b pb-2">
-                      <span class="font-bold">Paso {{$index+1}}.</span> {{step.step}}
+                      <span class="font-bold">{{ 'NEW_RECIPE.STEP' | translate}} {{$index+1}}.</span> {{step.step}}
                       <button type="button" (click)="removePaso($index)" class="text-pink-600 font-bold">X</button>
                     </li>
                   }
@@ -78,14 +101,14 @@
 
         <!-- Subir foto -->
         <div class="flex flex-col">
-          <label for="categoria" class="mb-1">Sube tu foto</label>
-          <input type="file" class="p-3 border border-gray-300 rounded-lg" accept="image/png, image/gif, image/jpeg" />
+          <label for="categoria" class="mb-1">{{ 'NEW_RECIPE.UPLOAD_PHOTO' | translate}}</label>
+          <input type="file" appRequiredFileType (change)="onFileChange($event)" class="p-3 border border-gray-300 rounded-lg" accept="image/png, image/gif, image/jpeg" />
         </div>
       </div>
 
       <!-- Botón de guardar -->
       <div class="text-center mt-6">
-        <button type="submit" class="px-6 py-2 bg-pink-500 text-white rounded-lg shadow-md hover:bg-pink-600">Guardar</button>
+        <button type="submit" name="foto" class="px-6 py-2 bg-pink-500 text-white rounded-lg shadow-md hover:bg-pink-600">{{ 'NEW_RECIPE.BUTTONS.SAVE' | translate}}</button>
       </div>
     </form>
   </div>

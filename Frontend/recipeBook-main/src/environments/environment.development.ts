@@ -1,4 +1,5 @@
 export const environment = {
     production: false,
-    apiUrl: 'http://my-dev-url'
+    apiUrl: 'http://localhost:3000/recipeBook/',
+    apiAuth: 'http://localhost:3000/api/'
   };

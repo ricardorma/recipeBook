@@ -80,7 +80,7 @@ section {
     border-right: 5px solid;
     animation: 
       typing 2s,
-      cursor .75s step-end infinite;
+      cursor .65s step-end infinite;
   }
   /* The typing effect */
   @keyframes typing {
@@ -92,7 +92,7 @@ section {
     from, to { border-color: transparent }
     50% { border-color: orange; }
   }
-
+/*
   @keyframes reveal {
     from {
       opacity: 0;
@@ -101,7 +101,7 @@ section {
       opacity: 1;
       translate: 0 0;
     }
-  }
+  }*/
 
   
 
@@ -111,7 +111,7 @@ section {
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
     h1, h2 {
-      font-size: 2.5rem;
+      font-size: 1.5rem;
     }
     .sectionWelcome {
       grid-template-columns: repeat(3, minmax(0, 1fr));

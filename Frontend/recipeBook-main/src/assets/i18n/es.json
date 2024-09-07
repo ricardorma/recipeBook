@@ -1,0 +1,52 @@
+{
+    "WELCOME_PAGE" : {
+        "INTRO_TITLE1" : "Guarda tus recetas favoritas",
+        "ELABORATE" : "Elabora",
+        "INTRO_MESSAGE" : "No dejes que ninguna receta quede fuera del menú. Registra todo lo que elaboras para que el resto del mundo pueda probar tus habilidades culinarias.",
+        "BUTTONS" : {
+            "START" : "Comienza",
+            "EXPLORE": "Explora"
+        },
+        "INTRO_TITLE2" : "Busca tus mejores recetas y prepara tu mejor menú",
+        "DISCOVER" : "Descubre",
+        "INTRO_MESSAGE2" : "Prueba nuestro sistema de búsqueda de recetas donde puedes encontrar tus recetas favoritas o incluso las más visitadas"
+    },
+    "NEW_RECIPE" : {
+        "INTRO_TITLE": "Añade tu propia receta",
+        "TITLE" : "Título de la receta",
+        "COOKING_TIME" : "Tiempo de preparación (Minutos)",
+        "CATEGORY": "Categoría",
+        "CHOOSE": "Seleccione una opción",
+        "INGREDIENTS": "Ingredientes",
+        "BUTTONS": {
+            "ADD": "Añadir",
+            "SAVE": "Guardar"
+        },
+        "STEPS": "Pasos",
+        "STEP": "Paso",
+        "UPLOAD_PHOTO": "Sube tu foto",
+        "SELECT_FILE": "Seleccionar archivo"
+    },
+    "RECIPE": {
+        "STEP": "Paso",
+        "INGREDIENTS": "Ingredientes"
+    },
+    "MY_RECIPES" : {
+        "STORED_RECIPES": "Tus recetas",
+        "FILTER_BY": "Filtrar por: ",
+        "CATEGORY": "Categoría",
+        "CHOOSE": "Seleccione una opción"
+    },
+    "CATEGORIES": {
+        "CARNE": "Carne",
+        "PESCADO": "Pescado",
+        "PASTA": "Pasta",
+        "ARROZ": "Arroz",
+        "PURE": "Purés",
+        "ENSALADA": "Ensalada",
+        "POSTRE": "Postre",
+        "SOPA": "Sopa",
+        "BEBIDA": "Bebida",
+        "MARISCO": "Marisco"
+  }
+}
