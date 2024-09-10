@@ -12,6 +12,7 @@ passport.use(
     },
     async (accessToken, refreshToken, profile, done) => {
       try {
+        /*
         let user = await User.findOne({ providerId: profile.id, provider: 'google' });
 
         if (!user) {
@@ -21,9 +22,8 @@ passport.use(
             avatar: profile.photos[0].value,
           });
           await user.save();
-        }
-
-        done(null, user);
+        }*/
+        done(null, profile);
       } catch (err) {
         done(err, false);
       }

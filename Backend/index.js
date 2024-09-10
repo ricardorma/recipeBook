@@ -6,6 +6,8 @@ dotenv.config();
 const cors = require('cors')
 const cookieSession = require('cookie-session')
 const passport = require('./config/passport');
+const path = require('path');
+const multer = require('multer');
 
 // BBDD
 const mongoose = require('mongoose')
@@ -19,9 +21,26 @@ const logger = require('morgan')
 // Definición de rutas
 const recipeRoutes = require('./src/routes/recipe');
 const authRoutes = require('./src/routes/auth');
+const userRoutes = require('./src/routes/user')
 
 const app = express();
 
+app.use('/images', express.static(path.join(__dirname, 'images')));
+
+const fileStorage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, 'images/');
+  },
+  filename: (req, file, cb) => {
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+    const ext = path.extname(file.originalname);
+    cb(null, file.fieldname + '-' + uniqueSuffix + ext);
+  }
+});
+
+app.use(
+  multer({ storage: fileStorage}).single('foto')
+);
 
 // Inicio express
 app.use(express.json()); 
@@ -31,7 +50,7 @@ app.use(cors());
 // Configurar sesión con cookies 
 app.use(cookieSession({
     name: 'session',
-    keys: ['somesupersecretsecret'],
+    keys: [process.env.SECRET_KEY],
     maxAge: 24 * 60 * 60 * 1000 // 24 horas
   }));
   
@@ -50,11 +69,23 @@ app.use((error, req, res, next) => {
 });
 
 // Manejo de rutas
-app.use('/recipe', recipeRoutes);
-app.use('/api', authRoutes);
+app.use('/recipeBook', recipeRoutes);
+app.use('/', authRoutes);
+app.use('/users', userRoutes);
 
 
-app.listen(port, () => {
+/*app.listen(port, () => {
     console.log('Servidor corriendo en el puerto', port);
     console.log('Documentación de la API en http://localhost:3000/api-docs');
-})
+})*/
+
+mongoose
+  .connect(process.env.MONGODB_URI)
+  .then(result => {
+    console.log('Servidor corriendo en el puerto', port);
+    console.log('Documentación de la API en http://localhost:3000/api-docs');
+    app.listen(port);
+  })
+  .catch(err => {
+    console.log(err);
+  });

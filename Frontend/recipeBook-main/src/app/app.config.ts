@@ -3,9 +3,10 @@ import { provideRouter, withViewTransitions } from '@angular/router';
 
 import { routes } from './app.routes';
 import { provideAnimations } from '@angular/platform-browser/animations';
-import { HttpClient, provideHttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient, provideHttpClient, HttpClientModule, withInterceptors } from '@angular/common/http';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { authInterceptor } from './core/auth.interceptor';
 
 export function HttpLoaderFactory(httpClient: HttpClient) {
   return  new  TranslateHttpLoader(httpClient, './assets/i18n/', '.json');
@@ -23,7 +24,7 @@ export const provideTranslation = () => ({
 export const appConfig: ApplicationConfig = {
   providers: [provideRouter(routes, withViewTransitions()), 
     provideAnimations(),
-    provideHttpClient(),
+    provideHttpClient(withInterceptors([authInterceptor])),
     importProvidersFrom([
       HttpClientModule, 
       TranslateModule.forRoot(provideTranslation())

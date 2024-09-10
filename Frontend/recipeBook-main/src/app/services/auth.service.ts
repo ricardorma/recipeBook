@@ -1,8 +1,9 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from '../../environments/environment.development';
+import { UserService } from './user.service';
 
 
 @Injectable({
@@ -10,7 +11,8 @@ import { environment } from '../../environments/environment.development';
 })
 export class AuthService {
   private loggedIn = new BehaviorSubject<boolean>(false);
-  userProfile: any;
+  protected readonly userService: UserService = inject(UserService);
+  // private userProfile = new BehaviorSubject<string | null>(null);
 
   constructor(private http: HttpClient, private router: Router) {}
 
@@ -22,18 +24,26 @@ export class AuthService {
     window.location.href = `${environment.apiAuth}auth/github`;
   }
 
+  /*getUserProfile(): Observable<string | null> {
+    return this.userProfile.asObservable();
+  }*/
+
   isLoggedIn() {
     return this.loggedIn.asObservable();
   }
 
-  setLoggedIn(value: boolean, userProfile: any) {
+  setLoggedIn(value: boolean) {
     this.loggedIn.next(value);
-    this.userProfile = userProfile;
+    /*this.userService.getUser().subscribe(profile => {
+      console.log(profile);
+      this.userProfile.next(profile.avatar); 
+    })*/
   }
 
   logout() {
     this.loggedIn.next(false);
-    this.userProfile = null;
+    //this.userProfile.next(null);
+    localStorage.removeItem('authToken');
     this.router.navigate(['/recipe-book/welcome']);
   }
 }

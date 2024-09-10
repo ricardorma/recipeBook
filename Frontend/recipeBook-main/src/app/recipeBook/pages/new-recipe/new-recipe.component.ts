@@ -99,19 +99,19 @@ export default class NewRecipeComponent implements OnInit{
     const formValues = this.recetaForm.value;
     const formData = new FormData();
   
-    formData.append('titulo', this.recetaForm.get('titulo')!.value);
-    formData.append('preparacion', formValues.preparacion);
-    formData.append('categoria', formValues.categoria);
+    formData.append('title', this.recetaForm.get('titulo')!.value);
+    formData.append('preparationTime', formValues.preparacion);
+    formData.append('category', formValues.categoria);
     formData.append('foto', formValues.foto); 
   
     // Añadir ingredientes como un array
     this.ingMeal.forEach((meal, index) => {
-      formData.append(`ingredientes[${index}]`, meal.ingredient);
+      formData.append(`ingredients[${index}]`, meal.ingredient);
     });
   
     // Añadir pasos como un array
     this.steps.forEach((step, index) => {
-      formData.append(`pasos[${index}]`, step.step);
+      formData.append(`instructions[${index}]`, step.step);
     });
 
     return formData;

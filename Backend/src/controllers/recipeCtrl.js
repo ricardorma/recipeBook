@@ -4,7 +4,7 @@ const Recipe = require('../models/recipeBD');
 // Obtener todas las recetas o 5 recetas aleatorias
 exports.getRecipes = async (req, res, next) => {
     try {
-      const { limit, popular } = req.query;
+      const { limit } = req.query;
   
       let recipes;
       
@@ -51,18 +51,19 @@ exports.getRecipes = async (req, res, next) => {
         error.statusCode = 422;
         throw error;
       }
-      const { title, category, ingredients, instructions, preparationTime, userEmail } = req.body;
-      const imagePath = req.file ? req.file.path : null;  // Si se sube una imagen
-      const userId = req.userId;
+
+      const { title, category, ingredients, instructions, preparationTime } = req.body;
+      const imagePath = req.file ? req.file.path || req.file.filename : null;
+      const user = req.user;
   
       const newRecipe = new Recipe({
         title,
         category,
-        ingredients: ingredients.split(','),  // Si los ingredientes se envían como una cadena
-        instructions: instructions.split(','),  // Si las instrucciones se envían como una cadena
+        ingredients,  // Si los ingredientes se envían como una cadena
+        instructions,  // Si las instrucciones se envían como una cadena
         preparationTime,
         image: imagePath,
-        userId
+        userId: user?.id
       });
   
       await newRecipe.save();

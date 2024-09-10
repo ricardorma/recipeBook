@@ -7,11 +7,11 @@ export interface Meal {
   }
   
   export interface RecipeData {
-    titulo: string;
-    preparacion: string;
-    categoria: string;
-    ingredientes: string[];
-    pasos: string[];
+    title: string;
+    preparationTime: string;
+    category: string;
+    ingredients: string[];
+    instructions: string[];
     foto: File | null;
   }
   

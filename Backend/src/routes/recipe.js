@@ -3,7 +3,10 @@ const express = require('express');
 const recipeController = require('../controllers/recipeCtrl');
 const isAuth = require('../middleware/is-auth');
 
+const multerConf = require('../../config/fileUpload')
+
 const router = express.Router();
+
 
 /**
  * @swagger
@@ -93,7 +96,7 @@ router.get('/recipes/:recipeId', isAuth, recipeController.getRecipe);
  *       500:
  *         description: Error del servidor
  */
-router.post('/recipe', isAuth, recipeController.createRecipe);
+router.post('/recipe', isAuth ,recipeController.createRecipe);
 
 /**
  * @swagger
