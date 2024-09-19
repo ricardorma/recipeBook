@@ -3,24 +3,52 @@ const Recipe = require('../models/recipeBD');
 
 // Obtener todas las recetas o 5 recetas aleatorias
 exports.getRecipes = async (req, res, next) => {
-    try {
-      const { limit } = req.query;
-  
-      let recipes;
-      
-      // Si se solicita un límite de recetas (por ejemplo, para la página de bienvenida)
-      if (popular && limit) {
-        recipes = await Recipe.find().sort({ views: -1 })  // Ordenar por número de visitas (descendente)
-                                     .limit(parseInt(limit));  // Limitar el número de resultados
-      } else {
-        recipes = await Recipe.find().sort({ createdAt: -1 });  // Recetas más recientes
-      }
-  
-      res.status(200).json({ recipes });
-    } catch (error) {
-      res.status(500).json({ message: 'Error al obtener las recetas', error: error.message });
+  try {
+    const { category, pageSize = 8, page = 1 } = req.query;  // Valores predeterminados si no se especifican
+    const userId = req.user.id;  // ID del usuario logueado
+
+    // Crear el objeto de búsqueda (filtros)
+    let query = { userId: userId };
+
+    // Si hay una categoría especificada, añadirla al filtro
+    if (category && category !== '') {
+      query.category = category;
     }
-  };
+
+    // Convertir los valores de paginación a enteros
+    const limit = parseInt(pageSize, 10);  // Cantidad de recetas por página
+    const skip = (parseInt(page, 10) - 1) * limit;  // Calcular cuántos documentos saltar
+
+    // Obtener las recetas con los filtros aplicados
+    const recipes = await Recipe.find(query)
+                                .sort({ createdAt: -1 })  // Ordenar por fecha de creación (más recientes primero)
+                                .skip(skip)  // Saltar las recetas según la página actual
+                                .limit(limit);  // Limitar el número de recetas por página
+
+    recipes.forEach(recipe => {
+      if (recipe.image) {
+        recipe.image = path.basename(recipe.image);
+      }
+    });
+
+    // Contar el total de recetas que coinciden con los filtros (para información adicional de paginación)
+    const totalRecipes = await Recipe.countDocuments(query);
+
+    // Enviar la respuesta con las recetas y la información de paginación
+    res.status(200).json({
+      recipes,
+      pagination: {
+        currentPage: parseInt(page, 10),
+        pageSize: limit,
+        totalRecipes,
+        totalPages: Math.ceil(totalRecipes / limit)
+      }
+    });
+  } catch (error) {
+    res.status(500).json({ message: 'Error al obtener las recetas', error: error.message });
+  }
+};
+
   
   // Obtener una receta por ID
   exports.getRecipe = async (req, res, next) => {

@@ -1,46 +1,58 @@
-import { Component } from '@angular/core';
-import {MatTableModule} from '@angular/material/table';
+import { Component, inject, OnInit, signal, WritableSignal } from '@angular/core';
+import {MatTableDataSource, MatTableModule} from '@angular/material/table';
+import { ActivatedRoute } from '@angular/router';
 import {TranslateModule} from '@ngx-translate/core'; 
-
-export interface PeriodicElement {
-  name: string;
-  position: number;
-  checked: false;
-}
-
-// Define an interface for a recipe step
-interface RecipeStep {
-  stepNumber: number;
-  description: string;
-}
-
-// Define an interface for a recipe
-interface Recipe {
-  recipeName: string;
-  steps: RecipeStep[];
-}
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  {position: 1, name: '300g de carne', checked: false},
-  {position: 2, name: '2L de leche', checked: false},
-  {position: 3, name: '5 dientes de ajo', checked: false}
-];
-
-
+import { RecipeService } from '../../../services/recipe.service';
+import { PeriodicElement, Recipe } from '../../../models/recipe.model';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { CommonModule } from '@angular/common';  
 
 @Component({
   selector: 'app-recipe',
   standalone: true,
-  imports: [MatTableModule, TranslateModule],
+  imports: [MatTableModule, TranslateModule, MatProgressSpinnerModule, CommonModule],
   templateUrl: './recipe.component.html',
   styleUrl: './recipe.component.css'
 })
-export default class RecipeComponent {
+export default class RecipeComponent implements OnInit{
+
+  protected readonly recipeService: RecipeService = inject(RecipeService);
+  protected readonly route: ActivatedRoute = inject(ActivatedRoute);
+  ELEMENT_DATA: PeriodicElement[] = [];
+
+  $recipe : WritableSignal<Recipe | null> = signal(null);
+  dataSource = new MatTableDataSource<PeriodicElement>(this.ELEMENT_DATA);
+
+  $loading: WritableSignal<boolean> = this.recipeService.$loading;
+  
+  ngOnInit(): void {
+    const id = this.route.snapshot.paramMap.get('id');
+    if(id)
+      this.loadRecipe(id);
+  }
+
+  loadRecipe(id: string): void {
+    this.recipeService.getRecipeById(id).subscribe({
+      next: (response) => {
+        // Aquí ya tenemos la propiedad "recipe" directamente en la respuesta
+        this.$recipe.set(response.recipe);  // Guardamos la receta directamente
+        this.ELEMENT_DATA = response.recipe.ingredients.map((ingredient, index) => ({
+          position: index + 1,  // El índice se usa para la posición, comenzando desde 1
+          ingredient: ingredient
+        }));
+        this.dataSource.data = this.ELEMENT_DATA;
+        console.log(this.$recipe());  // Imprimir la receta actual
+      },
+      error: (err) => {
+        console.error('Error al cargar la receta', err);
+      }
+    });
+  }
+
   displayedColumns: string[] = ['position', 'name'];
-  dataSource = ELEMENT_DATA;
 
   // Example recipe data
-exampleRecipe: Recipe = {
+/* exampleRecipe: Recipe = {
   recipeName: "Spaghetti Carbonara",
   steps: [
     { stepNumber: 1, description: "Bring a large pot of salted water to a boil." },
@@ -54,5 +66,5 @@ exampleRecipe: Recipe = {
     { stepNumber: 9, description: "If sauce is too thick, add reserved pasta water, a little at a time, until desired consistency is reached." },
     { stepNumber: 10, description: "Serve immediately, garnished with additional grated Parmesan cheese and chopped parsley." }
   ]
-};
+}; */
 }

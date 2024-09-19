@@ -32,6 +32,11 @@ export class AuthService {
     return this.loggedIn.asObservable();
   }
 
+  isAuthenticated(): boolean {
+    const token = localStorage.getItem('authToken');  
+    return !!token;  
+  }
+
   setLoggedIn(value: boolean) {
     this.loggedIn.next(value);
     /*this.userService.getUser().subscribe(profile => {

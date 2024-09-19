@@ -5,5 +5,6 @@ mat-card:hover {
 
 mat-card {
     transition: 0.3s;
-    background-color: #e3244e38;
+    background-color: #fdf2f4;
+    border-radius: 30px;
 }

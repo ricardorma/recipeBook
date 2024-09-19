@@ -7,20 +7,23 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {TranslateModule, TranslateService} from '@ngx-translate/core'; 
+import { CommonModule } from '@angular/common';
+import {MatDividerModule} from '@angular/material/divider';
 
 import { ThemePalette } from '@angular/material/core';
 import { RecipeService } from '../../../services/recipe.service';
-import { Recipe } from '../../../models/recipe.model';
+import { Pagination, Recipe } from '../../../models/recipe.model';
 import { AutoDestroyService } from '../../../services/auto-destroy.service';
 import { BehaviorSubject, switchMap, take, takeUntil } from 'rxjs';
 import { RecipeCategory } from '../../../models/recipe-category.enum';
 import { RecipeFilters } from '../../../models/recipe-filters.model';
 
+import { environment } from '../../../../environments/environment.development';
 
 @Component({
   selector: 'app-my-recipes',
   standalone: true,
-  imports: [MatFormFieldModule, MatSelectModule, MatInputModule, FormsModule, CardComponent, MatProgressSpinnerModule,TranslateModule],
+  imports: [MatFormFieldModule, MatSelectModule, MatInputModule, FormsModule, CardComponent, MatProgressSpinnerModule,TranslateModule, CommonModule, MatDividerModule],
   providers: [AutoDestroyService],
   templateUrl: './my-recipes.component.html',
   styleUrl: './my-recipes.component.css'
@@ -43,6 +46,14 @@ export default class MyRecipesComponent implements OnInit{
   
 
   $recipes: WritableSignal<Recipe[]> = signal([]);
+  // Inicializamos la paginación con un objeto con valores por defecto
+  pagination: WritableSignal<Pagination | null> = signal({
+    currentPage: 1,
+    pageSize: 8,
+    totalRecipes: 0,
+    totalPages: 0
+  });
+
   categories: RecipeCategory[] = [];
 
   constructor() {}
@@ -57,14 +68,18 @@ export default class MyRecipesComponent implements OnInit{
   }
 
   private loadRecipes(): void {
+    const imageBaseUrl = `${environment.apiAuth}images/`;
     this.filters$.asObservable().pipe(
       takeUntil(this.destroy$),
       switchMap(filtros => this.recipeService.searchRecipes(filtros))
-      )
-      .subscribe(data => {
-        console.log(data);
+    )
+    .subscribe(data => {
+      data.recipes.forEach(recipe => {
+        recipe.image = imageBaseUrl + recipe.image;
       });
-
+      this.$recipes.set(data.recipes);
+      this.pagination.set(data.pagination);  // Guardar la información de la paginación
+    });
   }
 
   onSelected(value: string): void {
@@ -80,6 +95,7 @@ export default class MyRecipesComponent implements OnInit{
 
   onPageChange(newPage: number): void {
     // Actualizar el filtro de paginación
+    console.log('Volvemos')
     const currentFilters = this.filters$.value;
     this.filters$.next({
       ...currentFilters,

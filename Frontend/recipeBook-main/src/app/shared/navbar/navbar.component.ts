@@ -27,9 +27,10 @@ export class NavbarComponent implements OnInit{
   }
   ngOnInit() {
     // Suscribirse al estado de loggedIn
-    this.authService.isLoggedIn().subscribe((status) => {
+    this.loggedIn = this.authService.isAuthenticated();
+    /*this.authService.isLoggedIn().subscribe((status) => {
       this.loggedIn = status;
-    });
+    });*/
 
     // Suscribirse al perfil del usuario (avatar)
     /*this.authService.getUserProfile().subscribe((profile) => {

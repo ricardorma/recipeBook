@@ -48,7 +48,7 @@
             <input id="ingredientes" formControlName="ingrediente" type="text" class="flex-grow p-3 border border-gray-300 rounded-lg" placeholder="" />
             <button type="button" (click)="addItem()" class="px-4 py-2 bg-pink-500 text-white rounded-lg shadow-md hover:bg-pink-600">{{ 'NEW_RECIPE.BUTTONS.ADD' | translate}}</button>
           </div>
-          @if(recetaForm.get('ingrediente')?.touched && ingMeal.length == 0 ) {
+          @if((!recetaForm.get('ingrediente')?.dirty && ingMeal.length == 0) &&  recetaForm.get('ingrediente')?.touched) {
             <span class="text-red-500 text-sm">
               Introduce al menos un ingrediente
             </span>
@@ -77,7 +77,7 @@
             <input id="pasos" formControlName="paso" type="text" class="flex-grow p-3 border border-gray-300 rounded-lg" placeholder="" />
             <button type="button" (click)="addPaso()" class="px-4 py-2 bg-pink-500 text-white rounded-lg shadow-md hover:bg-pink-600">{{ 'NEW_RECIPE.BUTTONS.ADD' | translate}}</button>
           </div>
-          @if(steps.length == 0 && recetaForm.get('paso')?.touched) {
+          @if((!recetaForm.get('paso')?.dirty && steps.length == 0) &&  recetaForm.get('paso')?.touched) {
             <span class="text-red-500 text-sm">
               Introduce al menos un paso
             </span>

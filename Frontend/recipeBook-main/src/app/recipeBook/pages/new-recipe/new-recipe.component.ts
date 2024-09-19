@@ -13,6 +13,8 @@ import { FormErrorService } from '../../../services/error-management.service';
 import { Meal, RecipeData, Step } from '../../../models/recipe-data.model';
 import { RequiredFileTypeDirective } from '../../../core/directives/required-file-type.directive' 
 import { RecipeService } from '../../../services/recipe.service';
+import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-new-recipe',
@@ -25,6 +27,8 @@ export default class NewRecipeComponent implements OnInit{
 
   protected readonly recipeService: RecipeService = inject(RecipeService);
   protected readonly formErrorService: FormErrorService = inject(FormErrorService);
+  protected readonly toastr = inject(ToastrService);
+  protected readonly router = inject(Router);
 
   recetaForm!: FormGroup; // Usa la notación ! para indicar que se inicializará en ngOnInit
   ingMeal: Meal[] = [];
@@ -58,10 +62,12 @@ export default class NewRecipeComponent implements OnInit{
       const recipeData: FormData = this.collectFormData();
       this.recipeService.createRecipe(recipeData).subscribe({
         next: (data) => {
-          console.log('Receta guardada correctamente', data);
+          this.toastr.success('Receta guardada correctamente.', '¡Receta añadida!');
+          this.router.navigate(['/recipe-book/my-recipes']);
         },
         error: (err) => {
           this.handleError(err);
+          this.toastr.warning('Ha ocurrido un error interno inesperado', '¡Oh!');
         }
       }
       )

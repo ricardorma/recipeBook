@@ -111,3 +111,6 @@ jspm_packages/
 *.ntvs*
 *.njsproj
 *.sln
+
+# Images
+/images
