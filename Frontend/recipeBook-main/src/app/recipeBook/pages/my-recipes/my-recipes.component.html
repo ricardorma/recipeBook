@@ -25,9 +25,9 @@
             No hay ninguna receta guardada
         </div>
     } @else {
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4 ml-[2%]">
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-8 ml-[3%]">
             @for (receta of $recipes(); track receta) {
-                <app-card [recipe]="receta"></app-card>
+                <app-card [recipe]="receta" (recipeDeleted)="onRecipeDeleted()"></app-card>
             }
         </div>
         

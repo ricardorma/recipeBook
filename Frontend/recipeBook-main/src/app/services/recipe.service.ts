@@ -34,6 +34,6 @@ export class RecipeService {
   }
 
   deleteRecipe(id: string): Observable<void> {
-    return this.httpClient.delete<void>(`${environment.apiUrl}/recipes/${id}`);
+    return this.httpClient.delete<void>(`${environment.apiUrl}recipes/${id}`);
   }
 }

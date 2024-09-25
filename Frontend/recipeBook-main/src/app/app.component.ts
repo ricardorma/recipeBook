@@ -19,23 +19,15 @@ export class AppComponent implements OnInit{
   constructor(private http: HttpClient) {}
 
   ngOnInit() {
-    // Verifica si hay un token en la URL (después de redirigir desde Google/GitHub)
-    const token = this.getTokenFromUrl();
-    if (token) {
-      // Guarda el token en localStorage
-      localStorage.setItem('authToken', token);
-      
-      // Llama a setLoggedIn con los datos del usuario
-      this.authService.setLoggedIn(true);
-
-      // Redirige a la página principal u otra después de recibir el token
-      this.router.navigate(['/recipe-book/']);
-    }
-  }
-
-  getTokenFromUrl(): string | null {
-    const urlParams = new URLSearchParams(window.location.search);
-    return urlParams.get('token');  // Extrae el token de la URL
+    // Verificar si el usuario ya está autenticado en el backend
+    this.authService.checkSession().subscribe(isAuthenticated => {
+      if (isAuthenticated) {
+        this.authService.setLoggedIn(true);
+        this.router.navigate(['/recipe-book/']);
+      } else {
+        this.authService.setLoggedIn(false);
+      }
+    });
   }
   
 }

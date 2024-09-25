@@ -39,16 +39,21 @@ export class AuthService {
 
   setLoggedIn(value: boolean) {
     this.loggedIn.next(value);
-    /*this.userService.getUser().subscribe(profile => {
-      console.log(profile);
-      this.userProfile.next(profile.avatar); 
-    })*/
+  }
+
+  // Nueva función para verificar si la sesión del usuario es válida
+  checkSession(): Observable<boolean> {
+    return this.http.get<boolean>(`${environment.apiUsers}check-session`);
   }
 
   logout() {
-    this.loggedIn.next(false);
-    //this.userProfile.next(null);
-    localStorage.removeItem('authToken');
-    this.router.navigate(['/recipe-book/welcome']);
+    // Llama al backend para cerrar la sesión
+    this.http.post(`${environment.apiAuth}logout`, {}).subscribe(() => {
+      this.loggedIn.next(false);  // Actualiza el estado local de la autenticación
+      this.router.navigate(['/recipe-book/welcome']);  // Redirige a la página de bienvenida
+    }, (error) => {
+      console.error('Error al cerrar sesión', error);  // Manejo de errores si la solicitud falla
+    });
   }
+  
 }

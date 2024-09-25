@@ -82,9 +82,13 @@ export default class MyRecipesComponent implements OnInit{
     });
   }
 
+  onRecipeDeleted(): void {
+    this.loadRecipes(); // Vuelve a cargar las recetas después de borrar
+  }
+
   onSelected(value: string): void {
     // Actualizar el filtro de categoría y reiniciar la paginación a la página 1
-    console.log(value)
+    (value)
     const currentFilters = this.filters$.value;
     this.filters$.next({
       ...currentFilters,
@@ -95,7 +99,6 @@ export default class MyRecipesComponent implements OnInit{
 
   onPageChange(newPage: number): void {
     // Actualizar el filtro de paginación
-    console.log('Volvemos')
     const currentFilters = this.filters$.value;
     this.filters$.next({
       ...currentFilters,

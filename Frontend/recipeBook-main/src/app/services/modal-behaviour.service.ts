@@ -11,7 +11,6 @@ export class ModalService {
   constructor() {}
 
   openModal() {
-    console.log('El estado de isMoodalOpen: ', this.isModalOpen )
     this.isModalOpen.next(true);  // Cambia el estado del modal a abierto
   }
 

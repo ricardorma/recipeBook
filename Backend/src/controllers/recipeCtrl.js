@@ -1,5 +1,6 @@
 const path = require('path');
 const Recipe = require('../models/recipeBD');
+const fs = require('fs');
 
 // Obtener todas las recetas o 5 recetas aleatorias
 exports.getRecipes = async (req, res, next) => {
@@ -64,7 +65,9 @@ exports.getRecipes = async (req, res, next) => {
       // Incrementar el número de visitas
       recipe.views += 1;
       await recipe.save();
-  
+      if (recipe.image) {
+        recipe.image = path.basename(recipe.image);
+      }
       res.status(200).json({ recipe });
     } catch (error) {
       res.status(500).json({ message: 'Error al obtener la receta', error: error.message });
@@ -106,13 +109,31 @@ exports.getRecipes = async (req, res, next) => {
     const recipeId = req.params.recipeId;
   
     try {
+      // Buscamos la receta en la base de datos
       const recipe = await Recipe.findByIdAndDelete(recipeId);
   
       if (!recipe) {
         return res.status(404).json({ message: 'Receta no encontrada' });
       }
   
-      res.status(200).json({ message: 'Receta eliminada con éxito' });
+      // Obtenemos el nombre de la imagen de la receta
+      const imageName = recipe.image; // Aquí asumo que `recipe.image` es el nombre de la imagen (por ejemplo, "foto-1725984192684-268737094")
+      const imageFileName = path.basename(imageName);
+      
+      // Definimos la ruta completa de la imagen
+      const imagePath = path.join(__dirname, '../../images', imageFileName);
+  
+      // Eliminamos la imagen del servidor
+      fs.unlink(imagePath, (err) => {
+        if (err) {
+          console.error('Error al eliminar la imagen:', err);
+        } else {
+          console.log('Imagen eliminada con éxito');
+        }
+      });
+  
+      // Enviamos una respuesta exitosa
+      res.status(200).json({ message: 'Receta e imagen eliminadas con éxito' });
     } catch (error) {
       res.status(500).json({ message: 'Error al eliminar la receta', error: error.message });
     }

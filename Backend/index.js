@@ -4,7 +4,7 @@ const swaggerConfig = require('./config/swagger');
 const dotenv = require('dotenv');
 dotenv.config();
 const cors = require('cors')
-const cookieSession = require('cookie-session')
+const session = require('express-session');
 const passport = require('./config/passport');
 const path = require('path');
 const multer = require('multer');
@@ -45,23 +45,31 @@ app.use(
 // Inicio express
 app.use(express.json()); 
 app.use(logger('dev'));  
-app.use(cors());      
+app.use(cors({
+  origin: process.env.BASE_FRONT_URL,  // La URL de tu frontend
+  credentials: true  // Permite el envío de cookies
+}));  
 
 // Configurar sesión con cookies 
-app.use(cookieSession({
-    name: 'session',
-    keys: [process.env.SECRET_KEY],
-    maxAge: 24 * 60 * 60 * 1000 // 24 horas
-  }));
-  
+app.use(session({
+  secret: process.env.SECRET_KEY,  // Secreto para firmar las cookies de sesión
+  resave: false,                   // No vuelve a guardar la sesión si no ha cambiado
+  saveUninitialized: false,        // No guarda sesiones vacías
+  cookie: {
+    maxAge: 24 * 60 * 60 * 1000,   // Duración de la cookie: 24 horas
+    httpOnly: true,                // No accesible desde JavaScript en el frontend
+    secure: process.env.NODE_ENV === 'production' // Solo usar cookies seguras en producción (HTTPS)
+  }
+}));
+
 app.use(passport.initialize());
 app.use(passport.session());
+
 
 swaggerConfig(app); 
 
 // Manejo de errores
 app.use((error, req, res, next) => {
-    console.log(error);
     res.status(error.statusCode || 500).json({
         message: error.message,
         data: error.data
@@ -74,16 +82,9 @@ app.use('/', authRoutes);
 app.use('/users', userRoutes);
 
 
-/*app.listen(port, () => {
-    console.log('Servidor corriendo en el puerto', port);
-    console.log('Documentación de la API en http://localhost:3000/api-docs');
-})*/
-
 mongoose
   .connect(process.env.MONGODB_URI)
   .then(result => {
-    console.log('Servidor corriendo en el puerto', port);
-    console.log('Documentación de la API en http://localhost:3000/api-docs');
     app.listen(port);
   })
   .catch(err => {

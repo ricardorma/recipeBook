@@ -23,7 +23,7 @@ export default class WelcomeRecipesComponent{
     // Disable scroll logic for small and medium devices
     if (this.breakpointObserver.isMatched('(max-width: 599px)') || this.breakpointObserver.isMatched('(max-width: 1025px)')) {
       this.section3Visible = true;
-      console.log('Es dispositivo pequeño')
+      ('Es dispositivo pequeño')
       return;
     }
 

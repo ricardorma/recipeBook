@@ -15,7 +15,6 @@ export class LoginComponent implements OnInit{
   
   ngOnInit(): void {
     this.modalService.modalStatus$.subscribe((status: boolean) => {
-      console.log('Suscripción activada, modalStatus:', status);
       this.isOpen = status;
     });
   }

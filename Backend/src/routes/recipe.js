@@ -1,9 +1,8 @@
 const express = require('express');
 
 const recipeController = require('../controllers/recipeCtrl');
-const isAuth = require('../middleware/is-auth');
-
-const multerConf = require('../../config/fileUpload')
+const isAuth = require('../middleware/is-auth-v2');
+const passport = require('passport')
 
 const router = express.Router();
 

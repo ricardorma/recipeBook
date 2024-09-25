@@ -10,5 +10,5 @@ import { RouterModule } from '@angular/router';
   styleUrl: './layout-recipe.component.css'
 })
 export default class LayoutRecipeComponent {
-
+  currentYear: number = new Date().getFullYear(); 
 }

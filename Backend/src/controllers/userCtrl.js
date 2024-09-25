@@ -1,7 +1,4 @@
-const jwt = require('jsonwebtoken');
-
 exports.getUser = async (req, res, next) => {
-    console.log(req.user)
     const userData = {
         name: req.user.name,
         avatar: req.user.avatarUrl || null
@@ -9,3 +6,11 @@ exports.getUser = async (req, res, next) => {
 
     res.json(userData)
 }
+
+exports.checkSession = (req, res) => {
+    if (req.isAuthenticated()) {
+      res.json(true);
+    } else {
+      res.json(false);
+    }
+  };

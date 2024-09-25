@@ -2,7 +2,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    row-gap: 30px; /* Reducido para una mejor apariencia en pantallas pequeñas */
+    row-gap: 50px; /* Reducido para una mejor apariencia en pantallas pequeñas */
 }
 
 .content {

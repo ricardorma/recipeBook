@@ -12,17 +12,6 @@ passport.use(
     },
     async (accessToken, refreshToken, profile, done) => {
       try {
-        /*
-        let user = await User.findOne({ providerId: profile.id, provider: 'google' });
-
-        if (!user) {
-          user = new User({
-            providerId: profile.id,
-            name: profile.displayName,
-            avatar: profile.photos[0].value,
-          });
-          await user.save();
-        }*/
         done(null, profile);
       } catch (err) {
         done(err, false);
@@ -36,22 +25,11 @@ passport.use(
     {
       clientID: process.env.GITHUB_CLIENT_ID,
       clientSecret: process.env.GITHUB_CLIENT_SECRET,
-      callbackURL: '/auth/github/callback',
+      callbackURL: process.env.GITHUB_CALLBACK_URL,
     },
     async (accessToken, refreshToken, profile, done) => {
       try {
-        let user = await User.findOne({ providerId: profile.id, provider: 'github' });
-
-        if (!user) {
-          user = new User({
-            providerId: profile.id,
-            name: profile.displayName,
-            avatar: profile.photos[0].value,
-          });
-          await user.save();
-        }
-
-        done(null, user);
+        done(null, profile);
       } catch (err) {
         done(err, false);
       }
@@ -60,12 +38,12 @@ passport.use(
 );
 
 passport.serializeUser((user, done) => {
-  done(null, user.id);
+  done(null, user.id);  // Serializa solo el ID del usuario
 });
 
 passport.deserializeUser(async (id, done) => {
   try {
-    const user = await User.findById(id);
+    const user = { id };  // Recupera el objeto del usuario
     done(null, user);
   } catch (err) {
     done(err, false);

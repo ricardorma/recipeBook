@@ -25,18 +25,17 @@ export class NavbarComponent implements OnInit{
     this.currentLang = this.translate.currentLang || 'es';
      // Por defecto, 'es'
   }
-  ngOnInit() {
-    // Suscribirse al estado de loggedIn
-    this.loggedIn = this.authService.isAuthenticated();
-    /*this.authService.isLoggedIn().subscribe((status) => {
-      this.loggedIn = status;
-    });*/
 
-    // Suscribirse al perfil del usuario (avatar)
-    /*this.authService.getUserProfile().subscribe((profile) => {
-      console.log('navbar', profile)
-      this.userProfile = profile;
-    });*/
+  ngOnInit() {
+    // Suscribirse al estado de loggedIn a través de un observable
+    this.authService.isLoggedIn().subscribe((isAuthenticated: boolean) => {
+      this.loggedIn = isAuthenticated;
+    });
+    
+    // También podrías hacer una verificación inicial si lo deseas
+    // this.authService.checkSession().subscribe((isAuthenticated: boolean) => {
+    //  this.authService.setLoggedIn(isAuthenticated);
+    // });
   }
 
   switchLanguage(): void {
@@ -49,7 +48,6 @@ export class NavbarComponent implements OnInit{
   }
 
   openLoginModal() {
-    console.log('Aqui')
     this.modalService.openModal();  // Llama al método para abrir el modal
   }
 

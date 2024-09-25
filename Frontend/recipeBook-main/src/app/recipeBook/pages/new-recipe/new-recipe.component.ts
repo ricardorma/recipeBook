@@ -71,8 +71,6 @@ export default class NewRecipeComponent implements OnInit{
         }
       }
       )
-    } else {
-      console.log('Formulario inválido');
     }
   }
   handleError(err: any) {
@@ -154,7 +152,7 @@ export default class NewRecipeComponent implements OnInit{
   }
 
   onSelected(value:string):void {
-    console.log(value);
+    (value);
   }
 
   onFileChange(event: any): void {
