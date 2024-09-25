@@ -48,5 +48,12 @@
         "SOPA": "Soup",
         "BEBIDA": "Drink",
         "MARISCO": "Seafood"
+  },
+  "NAVBAR" : {
+    "MAIN_1" : "Your recipes",
+    "MAIN_2" : "Create your own recipes",
+    "LOGIN" : "Log in",
+    "GOOGLE" : "Login with Google",
+    "GITHUB" : "Login with Github"
   }
 }

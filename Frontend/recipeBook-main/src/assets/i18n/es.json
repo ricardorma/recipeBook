@@ -48,5 +48,12 @@
         "SOPA": "Sopa",
         "BEBIDA": "Bebida",
         "MARISCO": "Marisco"
+  },
+  "NAVBAR" : {
+    "MAIN_1" : "Tus recetas",
+    "MAIN_2" : "Crea tus propias recetas",
+    "LOGIN" : "Iniciar Sesión",
+    "GOOGLE" : "Login con Google",
+    "GITHUB" : "Login con Github"
   }
 }

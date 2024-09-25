@@ -6,12 +6,12 @@ import { TranslateService } from '@ngx-translate/core';
 import { AuthService } from '../../services/auth.service';
 import { ModalService } from '../../services/modal-behaviour.service';
 import { LoginComponent } from '../login/login.component';
-
+import {TranslateModule} from '@ngx-translate/core'; 
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [MatMenuModule, MatMenuModule, RouterModule, CommonModule, LoginComponent],
+  imports: [MatMenuModule, MatMenuModule, RouterModule, CommonModule, LoginComponent, TranslateModule],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css'
 })
