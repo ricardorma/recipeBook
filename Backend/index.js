@@ -53,7 +53,7 @@ app.use(cors({
 
 // Configurar sesión con cookies 
 app.use(session({
-  secret: process.env.SESSION_SECRET, // Asegúrate de definir esta variable de entorno
+  secret: process.env.SECRET_KEY, // Asegúrate de definir esta variable de entorno
   resave: false,
   saveUninitialized: false,
   store: MongoStore.create({
