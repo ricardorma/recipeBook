@@ -8,6 +8,7 @@ const session = require('express-session');
 const passport = require('./config/passport');
 const path = require('path');
 const multer = require('multer');
+const MongoStore = require('connect-mongo');
 
 // BBDD
 const mongoose = require('mongoose')
@@ -52,12 +53,16 @@ app.use(cors({
 
 // Configurar sesión con cookies 
 app.use(session({
-  secret: process.env.SECRET_KEY,  // Secreto para firmar las cookies de sesión
-  resave: false,                   // No vuelve a guardar la sesión si no ha cambiado
-  saveUninitialized: false,        // No guarda sesiones vacías
+  secret: process.env.SESSION_SECRET, // Asegúrate de definir esta variable de entorno
+  resave: false,
+  saveUninitialized: false,
+  store: MongoStore.create({
+    mongoUrl: process.env.MONGODB_URI, // Tu URI de MongoDB
+    ttl: 14 * 24 * 60 * 60 // Duración de la sesión en segundos
+  }),
   cookie: {
-    maxAge: 24 * 60 * 60 * 1000,   // Duración de la cookie: 24 horas
-    httpOnly: true,                // No accesible desde JavaScript en el frontend
+    maxAge: 24 * 60 * 60 * 1000, // Duración de la cookie: 24 horas
+    httpOnly: true,
     secure: process.env.NODE_ENV === 'production' // Solo usar cookies seguras en producción (HTTPS)
   }
 }));
