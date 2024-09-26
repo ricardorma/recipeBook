@@ -6,7 +6,7 @@ import { RecipeService } from '../../../services/recipe.service';
 import { PeriodicElement, Recipe } from '../../../models/recipe.model';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { CommonModule } from '@angular/common';  
-import { environment } from '../../../../environments/environment.development';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-recipe',

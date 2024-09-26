@@ -18,7 +18,7 @@ import { BehaviorSubject, switchMap, take, takeUntil } from 'rxjs';
 import { RecipeCategory } from '../../../models/recipe-category.enum';
 import { RecipeFilters } from '../../../models/recipe-filters.model';
 
-import { environment } from '../../../../environments/environment.development';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-my-recipes',
