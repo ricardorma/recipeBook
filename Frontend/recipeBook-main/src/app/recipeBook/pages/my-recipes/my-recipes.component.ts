@@ -18,7 +18,6 @@ import { BehaviorSubject, switchMap, take, takeUntil } from 'rxjs';
 import { RecipeCategory } from '../../../models/recipe-category.enum';
 import { RecipeFilters } from '../../../models/recipe-filters.model';
 
-import { environment } from '../../../../environments/environment';
 import { ConfigService } from '../../../services/config/config.service';
 
 @Component({
