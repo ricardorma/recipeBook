@@ -7,7 +7,7 @@
     "build": "ng build --configuration production",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "serve": "http-server dist/recipe-book -p $PORT"
+    "serve": "npx serve dist/recipe-book -s -l $PORT"
   },
   "private": true,
   "dependencies": {
