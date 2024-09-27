@@ -6,7 +6,7 @@ import { RecipeService } from '../../../services/recipe.service';
 import { PeriodicElement, Recipe } from '../../../models/recipe.model';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { CommonModule } from '@angular/common';  
-import { ConfigService } from '../../../services/config/config.service';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-recipe',
@@ -19,9 +19,6 @@ export default class RecipeComponent implements OnInit{
 
   protected readonly recipeService: RecipeService = inject(RecipeService);
   protected readonly route: ActivatedRoute = inject(ActivatedRoute);
-  protected readonly configService: ConfigService = inject(ConfigService);
-
-  
   ELEMENT_DATA: PeriodicElement[] = [];
 
   $recipe : WritableSignal<Recipe | null> = signal(null);
@@ -38,7 +35,7 @@ export default class RecipeComponent implements OnInit{
   loadRecipe(id: string): void {
     this.recipeService.getRecipeById(id).subscribe({
       next: (response) => {
-        response.recipe.image = `${this.configService.apiAuth}images/` + response.recipe.image;
+        response.recipe.image = `${environment.apiAuth}images/` + response.recipe.image;
         // Aquí ya tenemos la propiedad "recipe" directamente en la respuesta
         this.$recipe.set(response.recipe);  // Guardamos la receta directamente
         this.ELEMENT_DATA = response.recipe.ingredients.map((ingredient, index) => ({

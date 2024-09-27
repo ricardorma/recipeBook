@@ -3,12 +3,9 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "npm run prebuild:dev && ng serve",
-    "build": "npm run prebuild && ng build --configuration production",
-    "build:dev": "npm run prebuild:dev && ng build --configuration development",
-    "prebuild": "NODE_ENV=production node ./scripts/generate-config.js",
-    "prebuild:dev": "NODE_ENV=development node generate-config.js",
-    "watch": "npm run prebuild:dev && ng build --watch --configuration development",
+    "start": "ng serve",
+    "build": "ng build --configuration production",
+    "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
   "private": true,
