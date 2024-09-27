@@ -17,7 +17,7 @@ if (env === 'development') {
   }
 
   // Leer el archivo de configuración base
-  config = JSON.parse(fs.readFileSync(configFilePath, 'utf8')); 
+  config = JSON.parse(fs.readFileSync(configFilePath, 'utf8'));
 } else {
   // En producción, crear el objeto de configuración directamente
   config.apiUrl = process.env.API_URL;
@@ -31,7 +31,13 @@ if (env === 'development') {
   }
 }
 
-const outputFilePath = path.resolve(__dirname, '/src/assets/config/config.json');
+const outputDir = path.resolve(__dirname, '/src/assets/config');  // Directorio de salida
+const outputFilePath = path.join(outputDir, 'config.json');
+
+// Verificar si el directorio de salida existe, y si no, crearlo
+if (!fs.existsSync(outputDir)) {
+  fs.mkdirSync(outputDir, { recursive: true });  // Crea el directorio y todos los padres necesarios
+}
 
 // Guardar el archivo final de configuración
 fs.writeFileSync(outputFilePath, JSON.stringify(config, null, 2));
