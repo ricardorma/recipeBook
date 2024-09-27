@@ -5,8 +5,8 @@ const path = require('path');
 const env = process.env.NODE_ENV || 'development';  // Usar "development" por defecto
 
 // Definir rutas de los archivos de configuración
-const configFilePath = path.resolve(__dirname, `./src/environments/config.${env}.json`);
-const outputFilePath = path.resolve(__dirname, './src/assets/config/config.json');
+const configFilePath = path.resolve(__dirname, `/src/environments/config/config.${env}.json`);
+const outputFilePath = path.resolve(__dirname, '/src/assets/config/config.json');
 
 // Leer el archivo de configuración base
 let config = JSON.parse(fs.readFileSync(configFilePath, 'utf8'));
