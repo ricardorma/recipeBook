@@ -17,7 +17,7 @@ if (env === 'development') {
   }
 
   // Leer el archivo de configuración base
-  config = JSON.parse(fs.readFileSync(configFilePath, 'utf8'));
+  config = JSON.parse(fs.readFileSync(configFilePath, 'utf8')); 
 } else {
   // En producción, crear el objeto de configuración directamente
   config.apiUrl = process.env.API_URL;
