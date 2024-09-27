@@ -8,7 +8,7 @@ let config = {};
 
 // Definir rutas de los archivos de configuración
 if (env === 'development') {
-  configFilePath = path.resolve(__dirname, '../src/environments/config/config.development.json');
+  configFilePath = path.resolve(__dirname, '/src/environments/config/config.development.json');
 
   // Verificar si el archivo de configuración existe
   if (!fs.existsSync(configFilePath)) {
@@ -31,7 +31,7 @@ if (env === 'development') {
   }
 }
 
-const outputFilePath = path.resolve(__dirname, '../src/assets/config/config.json');
+const outputFilePath = path.resolve(__dirname, '/src/assets/config/config.json');
 
 // Guardar el archivo final de configuración
 fs.writeFileSync(outputFilePath, JSON.stringify(config, null, 2));
