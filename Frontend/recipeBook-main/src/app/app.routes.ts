@@ -3,38 +3,40 @@ import { authGuard } from './guards/auth-guard.guard';
 
 export const routes: Routes = [
   {
-    path: 'recipe-book',
-    title: 'My Recipe Book' ,
+    // Cambiar 'recipe-book' por ''
+    path: '',
+    title: 'My Recipe Book',
     loadComponent: () => import('./recipeBook/pages/layout-recipe/layout-recipe.component'),
     children: [
       {
         path: 'my-recipes',
-        title: 'My Recipe Book' ,
+        title: 'My Recipes',
         canActivate: [authGuard],
         loadComponent: () =>
           import('./recipeBook/pages/my-recipes/my-recipes.component'),
       },
       {
         path: 'new-recipe',
-        title: 'My Recipe Book'  ,
+        title: 'New Recipe',
         canActivate: [authGuard],
         loadComponent: () =>
           import('./recipeBook/pages/new-recipe/new-recipe.component'),
       },
       {
         path: 'recipe/:id',
-        title: 'My Recipe Book',
+        title: 'Recipe Detail',
         canActivate: [authGuard],
         loadComponent: () =>
           import('./recipeBook/pages/recipe/recipe.component'),
       },
       {
         path: 'welcome',
-        title: 'My Recipe Book' ,
+        title: 'Welcome',
         loadComponent: () =>
           import('./recipeBook/pages/welcome-recipes/welcome-recipes.component'),
       },
       {
+        // Redirige al componente 'welcome' por defecto si no hay otra ruta
         path: '',
         redirectTo: 'welcome',
         pathMatch: 'full',
@@ -42,8 +44,9 @@ export const routes: Routes = [
     ],
   },
   {
+    // Cualquier ruta no encontrada redirigirá a la raíz (ya no 'recipe-book')
     path: '**',
-    redirectTo: '/recipe-book',
+    redirectTo: '',
     pathMatch: 'full',
   },
 ];
