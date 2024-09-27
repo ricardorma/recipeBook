@@ -1,0 +1,6 @@
+{
+    "apiUrl": "http://localhost:3000/",
+    "apiAuth": "http://localhost:3000/auth/",
+    "apiUsers": "http://localhost:3000/users/"
+  }
+  

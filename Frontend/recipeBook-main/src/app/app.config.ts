@@ -1,4 +1,4 @@
-import { ApplicationConfig, importProvidersFrom } from '@angular/core';
+import { APP_INITIALIZER, ApplicationConfig, importProvidersFrom } from '@angular/core';
 import { provideRouter, withViewTransitions } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -9,9 +9,14 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { authInterceptor } from './core/auth.interceptor';
 import { provideToastr } from 'ngx-toastr';
+import { ConfigService } from './services/config/config.service';
 
 export function HttpLoaderFactory(httpClient: HttpClient) {
   return  new  TranslateHttpLoader(httpClient, './assets/i18n/', '.json');
+}
+
+export function initializeApp(configService: ConfigService) {
+  return () => configService.loadConfig();  // Cargar la configuración antes de iniciar la app
 }
 
 export const provideTranslation = () => ({
@@ -41,5 +46,11 @@ export const appConfig: ApplicationConfig = {
       HttpClientModule, 
       TranslateModule.forRoot(provideTranslation())
     ]),
+    {
+      provide: APP_INITIALIZER,  // Inicializar el servicio de configuración
+      useFactory: initializeApp,
+      deps: [ConfigService],
+      multi: true
+    }
   ]
 };

@@ -19,6 +19,7 @@ import { RecipeCategory } from '../../../models/recipe-category.enum';
 import { RecipeFilters } from '../../../models/recipe-filters.model';
 
 import { environment } from '../../../../environments/environment';
+import { ConfigService } from '../../../services/config/config.service';
 
 @Component({
   selector: 'app-my-recipes',
@@ -32,6 +33,9 @@ export default class MyRecipesComponent implements OnInit{
  
   protected readonly recipeService: RecipeService = inject(RecipeService);
   protected readonly destroy$: AutoDestroyService = inject(AutoDestroyService);
+  protected readonly configService: ConfigService = inject(ConfigService);
+
+
   private filters$ = new BehaviorSubject<RecipeFilters>({
     category: '',
     pageSize: 8,
@@ -68,7 +72,7 @@ export default class MyRecipesComponent implements OnInit{
   }
 
   private loadRecipes(): void {
-    const imageBaseUrl = `${environment.apiAuth}images/`;
+    const imageBaseUrl = `${this.configService.apiAuth}images/`;
     this.filters$.asObservable().pipe(
       takeUntil(this.destroy$),
       switchMap(filtros => this.recipeService.searchRecipes(filtros))

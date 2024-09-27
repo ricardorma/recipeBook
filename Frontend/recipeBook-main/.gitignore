@@ -45,3 +45,7 @@ Thumbs.db
 src/environments/environment.ts
 src/environments/environment.development.ts
 src/environments/environment.production.ts
+
+# Ignorar archivos de configuración
+src/assets/config/config.json
+src/environments/config/config.production.json
