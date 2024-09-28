@@ -3,7 +3,13 @@ import { authGuard } from './guards/auth-guard.guard';
 
 export const routes: Routes = [
   {
-    // Cambiar 'recipe-book' por ''
+    // Ruta raíz vacía que redirige a /welcome por defecto
+    path: '',
+    pathMatch: 'full',
+    redirectTo: 'welcome', // Cambiado para redirigir a la página de bienvenida
+  },
+  {
+    // Ruta principal de la app (vacía en lugar de 'recipe-book')
     path: '',
     title: 'My Recipe Book',
     loadComponent: () => import('./recipeBook/pages/layout-recipe/layout-recipe.component'),
@@ -35,18 +41,12 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./recipeBook/pages/welcome-recipes/welcome-recipes.component'),
       },
-      {
-        // Redirige al componente 'welcome' por defecto si no hay otra ruta
-        path: '',
-        redirectTo: 'welcome',
-        pathMatch: 'full',
-      },
     ],
   },
   {
-    // Cualquier ruta no encontrada redirigirá a la raíz (ya no 'recipe-book')
+    // Ruta para manejar cualquier URL no encontrada
     path: '**',
-    redirectTo: '',
-    pathMatch: 'full',
+    redirectTo: 'welcome',
+    pathMatch: 'full', // Asegurarnos de que cualquier ruta desconocida redirija a welcome
   },
 ];
