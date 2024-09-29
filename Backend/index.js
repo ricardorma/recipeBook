@@ -51,6 +51,9 @@ app.use(cors({
   credentials: true  // Permite el envío de cookies
 }));  
 
+app.enable("trust proxy", 1);
+app.set("trust proxy", 1);
+
 // Configurar sesión con cookies 
 app.use(session({
   secret: process.env.SECRET_KEY, // Asegúrate de definir esta variable de entorno
