@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: my-recipe-book
+    env: static
+    staticPublishPath: dist/recipe-book
+    routes:
+      - type: rewrite
+        source: /.*
+        destination: /index.html
