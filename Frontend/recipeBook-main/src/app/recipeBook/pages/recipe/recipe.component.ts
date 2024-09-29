@@ -35,6 +35,7 @@ export default class RecipeComponent implements OnInit{
   loadRecipe(id: string): void {
     this.recipeService.getRecipeById(id).subscribe({
       next: (response) => {
+        console.log(response.recipe)
         this.$recipe.set(response.recipe);  // Guardamos la receta directamente
         this.ELEMENT_DATA = response.recipe.ingredients.map((ingredient, index) => ({
           position: index + 1,

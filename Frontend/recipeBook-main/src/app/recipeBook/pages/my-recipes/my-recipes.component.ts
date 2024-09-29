@@ -74,6 +74,7 @@ export default class MyRecipesComponent implements OnInit{
     )
     .subscribe(data => {
       // Ya no es necesario modificar las URLs de las imágenes
+      console.log(data)
       this.$recipes.set(data.recipes);
       this.pagination.set(data.pagination);  // Guardar la información de la paginación
     });
