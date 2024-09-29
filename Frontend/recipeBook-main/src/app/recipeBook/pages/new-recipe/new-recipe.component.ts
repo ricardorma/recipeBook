@@ -63,7 +63,7 @@ export default class NewRecipeComponent implements OnInit{
       this.recipeService.createRecipe(recipeData).subscribe({
         next: (data) => {
           this.toastr.success('Receta guardada correctamente.', '¡Receta añadida!');
-          this.router.navigate(['/recipe-book/my-recipes']);
+          this.router.navigate(['/my-recipes']);
         },
         error: (err) => {
           this.handleError(err);

@@ -23,7 +23,7 @@ export class AppComponent implements OnInit{
     this.authService.checkSession().subscribe(isAuthenticated => {
       if (isAuthenticated) {
         this.authService.setLoggedIn(true);
-        this.router.navigate(['/recipe-book/']);
+        this.router.navigate(['/welcome/']);
       } else {
         this.authService.setLoggedIn(false);
       }

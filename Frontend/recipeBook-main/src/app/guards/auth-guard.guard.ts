@@ -23,13 +23,13 @@ export const authGuard: CanActivateFn = (route, state) => {
               return true;
             } else {
               toastr.error('No tienes acceso a esta página. Inicia sesión primero.', 'Acceso denegado');
-              router.navigate(['/recipe-book/welcome'], { queryParams: { returnUrl: state.url } });
+              router.navigate(['/welcome'], { queryParams: { returnUrl: state.url } });
               return false;
             }
           }),
           catchError(() => {
             toastr.error('No tienes acceso a esta página. Inicia sesión primero.', 'Acceso denegado');
-            router.navigate(['/recipe-book/welcome'], { queryParams: { returnUrl: state.url } });
+            router.navigate(['/welcome'], { queryParams: { returnUrl: state.url } });
             return of(false);  // En caso de error, deniega el acceso
           })
         );

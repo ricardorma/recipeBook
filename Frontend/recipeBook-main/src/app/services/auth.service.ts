@@ -50,7 +50,7 @@ export class AuthService {
     // Llama al backend para cerrar la sesión
     this.http.post(`${environment.apiAuth}logout`, {}).subscribe(() => {
       this.loggedIn.next(false);  // Actualiza el estado local de la autenticación
-      this.router.navigate(['/recipe-book/welcome']);  // Redirige a la página de bienvenida
+      this.router.navigate(['/welcome']);  // Redirige a la página de bienvenida
     }, (error) => {
       console.error('Error al cerrar sesión', error);  // Manejo de errores si la solicitud falla
     });
