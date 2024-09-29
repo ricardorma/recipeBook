@@ -68,19 +68,17 @@ export default class MyRecipesComponent implements OnInit{
   }
 
   private loadRecipes(): void {
-    const imageBaseUrl = `${environment.apiAuth}images/`;
     this.filters$.asObservable().pipe(
       takeUntil(this.destroy$),
       switchMap(filtros => this.recipeService.searchRecipes(filtros))
     )
     .subscribe(data => {
-      data.recipes.forEach(recipe => {
-        recipe.image = imageBaseUrl + recipe.image;
-      });
+      // Ya no es necesario modificar las URLs de las imágenes
       this.$recipes.set(data.recipes);
       this.pagination.set(data.pagination);  // Guardar la información de la paginación
     });
   }
+  
 
   onRecipeDeleted(): void {
     this.loadRecipes(); // Vuelve a cargar las recetas después de borrar

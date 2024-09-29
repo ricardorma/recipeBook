@@ -35,11 +35,9 @@ export default class RecipeComponent implements OnInit{
   loadRecipe(id: string): void {
     this.recipeService.getRecipeById(id).subscribe({
       next: (response) => {
-        response.recipe.image = `${environment.apiAuth}images/` + response.recipe.image;
-        // Aquí ya tenemos la propiedad "recipe" directamente en la respuesta
         this.$recipe.set(response.recipe);  // Guardamos la receta directamente
         this.ELEMENT_DATA = response.recipe.ingredients.map((ingredient, index) => ({
-          position: index + 1,  // El índice se usa para la posición, comenzando desde 1
+          position: index + 1,
           ingredient: ingredient
         }));
         this.dataSource.data = this.ELEMENT_DATA;
@@ -49,6 +47,7 @@ export default class RecipeComponent implements OnInit{
       }
     });
   }
+  
 
   displayedColumns: string[] = ['position', 'name'];
 

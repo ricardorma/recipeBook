@@ -1,6 +1,7 @@
 const path = require('path');
 const Recipe = require('../models/recipeBD');
 const fs = require('fs');
+const baseImageUrl = process.env.BASE_IMAGE_URL;
 
 // Obtener todas las recetas o 5 recetas aleatorias
 exports.getRecipes = async (req, res, next) => {
@@ -28,7 +29,9 @@ exports.getRecipes = async (req, res, next) => {
 
     recipes.forEach(recipe => {
       if (recipe.image) {
-        recipe.image = path.basename(recipe.image);
+        // Normalizamos la imagen con la URL completa, reemplazando backslashes por slashes para rutas correctas
+        const imagePath = recipe.image.replace(/\\/g, '/');
+        recipe.image = `${baseImageUrl}${imagePath}`;
       }
     });
 
@@ -54,25 +57,29 @@ exports.getRecipes = async (req, res, next) => {
   // Obtener una receta por ID
   exports.getRecipe = async (req, res, next) => {
     const recipeId = req.params.recipeId;
-  
+
     try {
       const recipe = await Recipe.findById(recipeId);
-  
+
       if (!recipe) {
         return res.status(404).json({ message: 'Receta no encontrada' });
       }
-  
+
       // Incrementar el número de visitas
       recipe.views += 1;
       await recipe.save();
+
+      // Formar la URL completa de la imagen, si existe
       if (recipe.image) {
-        recipe.image = path.basename(recipe.image);
+        const imagePath = recipe.image.replace(/\\/g, '/');  // Reemplazar backslashes con forward slashes
+        recipe.image = `${baseImageUrl}${imagePath}`;
       }
+
       res.status(200).json({ recipe });
     } catch (error) {
       res.status(500).json({ message: 'Error al obtener la receta', error: error.message });
     }
-  };
+};
   
   // Crear una nueva receta
   exports.createRecipe = async (req, res, next) => {
