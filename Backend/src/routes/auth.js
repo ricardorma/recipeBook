@@ -31,7 +31,11 @@ router.post('/logout', (req, res) => {
       return res.status(500).json({ message: 'Error al destruir la sesión' });
     }
     // Eliminar la cookie de sesión
-    res.clearCookie('connect.sid', { path: '/' });
+    res.clearCookie('connect.sid', { 
+      path: '/', 
+      secure: true,  // Si estás usando HTTPS
+      sameSite: 'None'  // Necesario para entornos cross-origin
+    });
     res.status(200).json({ message: 'Sesión cerrada con éxito' });
   });
 });

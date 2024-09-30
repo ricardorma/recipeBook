@@ -51,7 +51,7 @@ app.use(logger('dev'));
 app.use((req, res, next) => {
   res.setHeader(
     "Access-Control-Allow-Origin",
-    process.env.BASE_FRONT_URL
+    "https://recipe-book-navy.vercel.app"
   );
   res.setHeader(
     "Access-Control-Allow-Methods",
