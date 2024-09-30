@@ -9,7 +9,7 @@ const passport = require('./config/passport');
 const path = require('path');
 const multer = require('multer');
 const MongoStore = require('connect-mongo');
-import cookieParser from "cookie-parser";
+const cookieParser = require('cookie-parser')
 
 // BBDD
 const mongoose = require('mongoose')
