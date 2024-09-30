@@ -9,6 +9,7 @@ const passport = require('./config/passport');
 const path = require('path');
 const multer = require('multer');
 const MongoStore = require('connect-mongo');
+import cookieParser from "cookie-parser";
 
 // BBDD
 const mongoose = require('mongoose')
@@ -51,6 +52,7 @@ app.use(cors({
   credentials: true  // Permite el envío de cookies
 }));  
 
+app.use(cookieParser());
 app.enable("trust proxy", 1);
 app.set("trust proxy", 1);
 
