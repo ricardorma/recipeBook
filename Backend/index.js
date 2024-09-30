@@ -48,9 +48,14 @@ app.use(
 app.use(express.json()); 
 app.use(logger('dev'));  
 app.use(cors({
-  origin: true,  // La URL de tu frontend
-  credentials: true  // Permite el envío de cookies
-}));  
+  origin: process.env.BASE_FRONT_URL || 'https://recipe-book-navy.vercel.app',
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
+
+app.options('*', cors());  // Maneja las solicitudes preflight
+
 
 app.use(cookieParser());
 app.enable("trust proxy", 1);

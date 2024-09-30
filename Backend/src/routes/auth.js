@@ -23,6 +23,9 @@ router.get('/auth/github/callback', passport.authenticate('github', { session: t
 // Cerrar sesión (opcional)
 router.post('/logout', (req, res) => {
   // Destruir la sesión
+  res.setHeader("Access-Control-Allow-Origin", process.env.BASE_FRONT_URL); // Allow requests from any origin
+  res.setHeader("Access-Control-Allow-Credentials", "true"); // Allow credentials (cookies, authorization headers)
+
   req.session.destroy((err) => {
     if (err) {
       return res.status(500).json({ message: 'Error al destruir la sesión' });
