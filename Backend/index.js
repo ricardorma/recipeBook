@@ -48,7 +48,7 @@ app.use(
 app.use(express.json()); 
 app.use(logger('dev'));  
 app.use(cors({
-  origin: process.env.BASE_FRONT_URL,  // La URL de tu frontend
+  origin: true,  // La URL de tu frontend
   credentials: true  // Permite el envío de cookies
 }));  
 
