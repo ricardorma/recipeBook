@@ -88,8 +88,8 @@
               <div class="bg-white rounded-lg shadow-md p-4 max-h-[150px] overflow-y-scroll">
                 <ul class="space-y-2">
                   @for (step of steps; track $index) {
-                    <li class="flex justify-between items-center border-b pb-2">
-                      <span class="font-bold">{{ 'NEW_RECIPE.STEP' | translate}} {{$index+1}}.</span> {{step.step}}
+                    <li class="flex justify-between items-center border-b pb-2 gap-x-5">
+                      <span class="font-bold text-center">{{ 'NEW_RECIPE.STEP' | translate}} {{$index+1}}</span> {{step.step}}
                       <button type="button" (click)="removePaso($index)" class="text-pink-600 font-bold">X</button>
                     </li>
                   }
