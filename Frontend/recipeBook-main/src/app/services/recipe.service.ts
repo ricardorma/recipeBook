@@ -30,7 +30,11 @@ export class RecipeService {
   }
 
   createRecipe(recipe: FormData): Observable<RecipeData> {
-    return this.httpClient.post<RecipeData>(`${environment.apiUrl}recipe`, recipe, { withCredentials: true });
+    const headers = {
+      'Accept': 'application/json',
+      'Content-Type': 'multipart/form-data'
+    };
+    return this.httpClient.post<RecipeData>(`${environment.apiUrl}recipe`, recipe, {  headers: headers });
   }
 
   deleteRecipe(id: string): Observable<void> {
