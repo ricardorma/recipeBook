@@ -1,18 +1,18 @@
-<mat-card id="cardTransition" class="break-words w-[95%] rounded-[20px] text-justify mx-auto mb-6 flex flex-col items-center">
-  <mat-card-header id="headerCard" class="text-center">
+<mat-card id="cardTransition" class="break-words w-[80%] rounded-[20px] text-justify mx-auto mb-6 flex flex-col items-center">
+    <!-- Imagen centrada -->
+  <img mat-card-image [src]="recipe.image" class="object-cover m-auto" alt="{{ recipe.title }}">
+
+  <mat-card-header id="headerCard" class="text-center"></mat-card-header>
     <mat-card-title class="text-xl font-semibold">{{ recipe.title }}</mat-card-title>
     <mat-card-subtitle class="text-sm text-gray-500">{{ recipe.category }}</mat-card-subtitle>
   </mat-card-header>
 
-  <!-- Imagen centrada -->
-  <img mat-card-image [src]="recipe.image" class="w-[200px] h-[200px] object-cover mt-4 m-auto rounded-[20px]" alt="{{ recipe.title }}">
-
   <!-- Acciones (Botones) -->
   <mat-card-actions class="flex justify-center mt-4 space-x-4">
-    <button mat-raised-button style="background-color: #d2a679; color: #ffffff;" [routerLink]="['/recipe', recipe._id]">
+    <button mat-raised-button style="background-color: #c76e14c9; color: #ffffff; border-radius: 20px;" [routerLink]="['/recipe', recipe._id]">
       Ver
     </button>
-    <button mat-raised-button style="background-color: #b23c17; color: #ffffff;" (click)="deleteRecipe(recipe._id)">
+    <button mat-raised-button style="background-color: #8d4e3a; color: #ffffff; border-radius: 20px;" (click)="deleteRecipe(recipe._id)">
       Borrar
     </button>
   </mat-card-actions>
