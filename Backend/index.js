@@ -3,7 +3,6 @@ const express = require('express')
 const swaggerConfig = require('./config/swagger');
 const dotenv = require('dotenv');
 dotenv.config();
-const cors = require('cors')
 const session = require('express-session');
 const passport = require('./config/passport');
 const path = require('path');
@@ -27,6 +26,19 @@ const userRoutes = require('./src/routes/user')
 
 const app = express();
 
+app.use(function(req, res, next) {
+  // res.header("Access-Control-Allow-Origin", "*");
+  const allowedOrigins = [process.env.BASE_FRONT_URL];
+  const origin = req.headers.origin;
+  if (allowedOrigins.includes(origin)) {
+       res.setHeader('Access-Control-Allow-Origin', origin);
+  }
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+  res.header("Access-Control-Allow-credentials", true);
+  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, UPDATE");
+  next();
+});
+
 app.use('/images', express.static(path.join(__dirname, 'images')));
 
 const fileStorage = multer.diskStorage({
@@ -47,10 +59,6 @@ app.use(
 // Inicio express
 app.use(express.json()); 
 app.use(logger('dev'));  
-app.use(cors({
-  origin: process.env.BASE_FRONT_URL,  // La URL de tu frontend
-  credentials: true  // Permite el envío de cookies
-}));  
 
 app.use(cookieParser());
 app.enable("trust proxy", 1);
