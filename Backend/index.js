@@ -46,9 +46,11 @@ app.use(
 
 // Inicio express
 app.use(express.json()); 
-app.use(express.urlencoded({ extended: true }));
 app.use(logger('dev'));  
-
+app.use(cors({
+  origin: process.env.BASE_FRONT_URL,  // La URL de tu frontend
+  credentials: true  // Permite el envío de cookies
+}));  
 
 app.use(cookieParser());
 app.enable("trust proxy", 1);
@@ -70,25 +72,6 @@ app.use(session({
     sameSite: 'none', // Solo usar cookies seguras en producción (HTTPS)
   }
 }));
-
-app.use(cors({
-  origin: "*",  // La URL de tu frontend
-  credentials: true  // Permite el envío de cookies
-}));  
-
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization, X-Requested-With");
-  res.header("Access-Control-Allow-Credentials", "true");
-  next();
-});
-
-app.options('*', cors({
-  origin: process.env.BASE_FRONT_URL,
-  credentials: true
-}));
-
 
 app.use(passport.initialize());
 app.use(passport.session());
