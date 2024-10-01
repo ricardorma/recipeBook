@@ -2,7 +2,7 @@
     <!-- Imagen centrada -->
   <img mat-card-image [src]="recipe.image" class="object-cover m-auto" alt="{{ recipe.title }}">
 
-  <mat-card-header id="headerCard" class="text-center"></mat-card-header>
+  <mat-card-header id="headerCard" class="text-center">
     <mat-card-title class="text-xl font-semibold">{{ recipe.title }}</mat-card-title>
     <mat-card-subtitle class="text-sm text-gray-500">{{ recipe.category }}</mat-card-subtitle>
   </mat-card-header>
@@ -16,9 +16,5 @@
       Borrar
     </button>
   </mat-card-actions>
-  
-  
-  
-  
   
 </mat-card>
