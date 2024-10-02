@@ -44,7 +44,7 @@
         <!-- Ingredientes -->
         <div class="flex flex-col">
           <label for="ingredientes" class="mb-1">{{ 'NEW_RECIPE.INGREDIENTS' | translate}}</label>
-          <div class="flex gap-2 items-center">
+          <div class="flex gap-2 items-center flex-wrap">
             <input id="ingredientes" formControlName="ingrediente" type="text" class="flex-grow p-3 border border-gray-300 rounded-lg" placeholder="" />
             <button type="button" (click)="addItem()" class="px-4 py-2 bg-pink-500 text-white rounded-lg shadow-md hover:bg-pink-600">{{ 'NEW_RECIPE.BUTTONS.ADD' | translate}}</button>
           </div>
@@ -73,7 +73,7 @@
         <!-- Pasos -->
         <div class="flex flex-col">
           <label for="pasos" class="mb-1">{{ 'NEW_RECIPE.STEPS' | translate}}</label>
-          <div class="flex gap-2 items-center">
+          <div class="flex gap-2 items-center flex-wrap">
             <input id="pasos" formControlName="paso" type="text" class="flex-grow p-3 border border-gray-300 rounded-lg" placeholder="" />
             <button type="button" (click)="addPaso()" class="px-4 py-2 bg-pink-500 text-white rounded-lg shadow-md hover:bg-pink-600">{{ 'NEW_RECIPE.BUTTONS.ADD' | translate}}</button>
           </div>
