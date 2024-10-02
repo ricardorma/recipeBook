@@ -22,9 +22,14 @@ export interface Recipe {
     ingredients: string[];
     instructions: string[];
     preparationTime: number;
-    image: string;
+    image: ImageData | string; 
     userId: string;
     views: number;
     createdAt: string;
   }
   
+  // Define una interfaz para los datos de la imagen
+export interface ImageData {
+  data: Uint8Array | number[];  // Los datos binarios pueden estar en forma de Uint8Array o matriz de números
+  contentType: string;          // El tipo MIME de la imagen (ejemplo: 'image/jpeg')
+}

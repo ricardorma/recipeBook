@@ -35,7 +35,10 @@ export default class RecipeComponent implements OnInit{
   loadRecipe(id: string): void {
     this.recipeService.getRecipeById(id).subscribe({
       next: (response) => {
-        console.log(response.recipe)
+        if (typeof response.recipe.image !== 'string' && response.recipe.image?.data) {
+          // Construir el data URI usando el tipo de contenido y los datos en base64
+          response.recipe.image = `data:${response.recipe.image.contentType};base64,${response.recipe.image.data}`;
+        }
         this.$recipe.set(response.recipe);  // Guardamos la receta directamente
         this.ELEMENT_DATA = response.recipe.ingredients.map((ingredient, index) => ({
           position: index + 1,

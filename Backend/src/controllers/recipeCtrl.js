@@ -24,16 +24,7 @@ exports.getRecipes = async (req, res, next) => {
                                 .skip(skip)  // Saltar las recetas según la página actual
                                 .limit(limit);  // Limitar el número de recetas por página
 
-    recipes.forEach(recipe => {
-      if (recipe.image && recipe.image.data) {
-      const base64Image = Buffer.from(recipe.image.data).toString('base64');
-      const contentType = recipe.image.contentType;
-
-      // Agregar el prefijo necesario para mostrar la imagen en el frontend
-      recipe.image = `data:${contentType};base64,${base64Image}`;
-    }
-    });
-
+    
     // Contar el total de recetas que coinciden con los filtros (para información adicional de paginación)
     const totalRecipes = await Recipe.countDocuments(query);
 
@@ -68,15 +59,6 @@ exports.getRecipes = async (req, res, next) => {
       recipe.views += 1;
       await recipe.save();
 
-      // Formar la URL completa de la imagen, si existe
-      if (recipe.image && recipe.image.data) {
-        const base64Image = Buffer.from(recipe.image.data).toString('base64');
-        const contentType = recipe.image.contentType;
-  
-        // Agregar el prefijo necesario para mostrar la imagen en el frontend
-        recipe.image = `data:${contentType};base64,${base64Image}`;
-      }
-
       res.status(200).json({ recipe });
     } catch (error) {
       res.status(500).json({ message: 'Error al obtener la receta', error: error.message });
@@ -102,7 +84,7 @@ exports.getRecipes = async (req, res, next) => {
         instructions,  // Si las instrucciones se envían como una cadena
         preparationTime,
         image: {
-          data: req.file.buffer,  // Almacena los datos de la imagen como un buffer
+          data: req.file.buffer.toString('base64'),  // Almacena los datos de la imagen como un buffer
           contentType: req.file.mimetype  // Almacena el tipo de contenido (por ejemplo, 'image/jpeg')
         },
         userId: user?.id

@@ -23,7 +23,7 @@ const recipeSchema = new Schema({
     required: true, 
   },
   image: {
-    data: Buffer, 
+    data: String, 
     contentType: String
   },
   userId: {

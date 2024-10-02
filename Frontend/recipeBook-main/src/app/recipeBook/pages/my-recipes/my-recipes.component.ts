@@ -73,10 +73,17 @@ export default class MyRecipesComponent implements OnInit{
       switchMap(filtros => this.recipeService.searchRecipes(filtros))
     )
     .subscribe(data => {
-      // Ya no es necesario modificar las URLs de las imágenes
-      console.log(data)
+      // Recorrer las recetas y modificar la URL de la imagen para construir el data URI
+      data.recipes.forEach((recipe: Recipe) => {
+        if (typeof recipe.image !== 'string' && recipe.image?.data) {
+          // Construir el data URI usando el tipo de contenido y los datos en base64
+          recipe.image = `data:${recipe.image.contentType};base64,${recipe.image.data}`;
+        }
+      });
+  
+      // Actualizar los valores de las recetas y la paginación
       this.$recipes.set(data.recipes);
-      this.pagination.set(data.pagination);  // Guardar la información de la paginación
+      this.pagination.set(data.pagination);
     });
   }
   
