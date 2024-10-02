@@ -24,8 +24,7 @@ const recipeSchema = new Schema({
   },
   image: {
     data: Buffer, 
-    contentType: String,  
-    required: false, 
+    contentType: String
   },
   userId: {
     type: String,
