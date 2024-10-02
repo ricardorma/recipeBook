@@ -26,8 +26,12 @@ exports.getRecipes = async (req, res, next) => {
 
     recipes.forEach(recipe => {
       if (recipe.image && recipe.image.data) {
-        recipe.image = `data:${recipe.image.contentType};base64,${recipe.image.data.toString('base64')}`;
-      }
+      const base64Image = Buffer.from(recipe.image.data).toString('base64');
+      const contentType = recipe.image.contentType;
+
+      // Agregar el prefijo necesario para mostrar la imagen en el frontend
+      recipe.image = `data:${contentType};base64,${base64Image}`;
+    }
     });
 
     // Contar el total de recetas que coinciden con los filtros (para información adicional de paginación)
@@ -66,7 +70,11 @@ exports.getRecipes = async (req, res, next) => {
 
       // Formar la URL completa de la imagen, si existe
       if (recipe.image && recipe.image.data) {
-        recipe.image = `data:${recipe.image.contentType};base64,${recipe.image.data.toString('base64')}`;
+        const base64Image = Buffer.from(recipe.image.data).toString('base64');
+        const contentType = recipe.image.contentType;
+  
+        // Agregar el prefijo necesario para mostrar la imagen en el frontend
+        recipe.image = `data:${contentType};base64,${base64Image}`;
       }
 
       res.status(200).json({ recipe });
