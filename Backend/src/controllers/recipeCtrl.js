@@ -1,7 +1,4 @@
-const path = require('path');
 const Recipe = require('../models/recipeBD');
-const fs = require('fs');
-const baseImageUrl = process.env.BASE_IMAGE_URL;
 
 // Obtener todas las recetas o 5 recetas aleatorias
 exports.getRecipes = async (req, res, next) => {
@@ -28,10 +25,8 @@ exports.getRecipes = async (req, res, next) => {
                                 .limit(limit);  // Limitar el número de recetas por página
 
     recipes.forEach(recipe => {
-      if (recipe.image) {
-        // Normalizamos la imagen con la URL completa, reemplazando backslashes por slashes para rutas correctas
-        const imagePath = recipe.image.replace(/\\/g, '/');
-        recipe.image = `${baseImageUrl}${imagePath}`;
+      if (recipe.image && recipe.image.data) {
+        recipe.image = `data:${recipe.image.contentType};base64,${recipe.image.data.toString('base64')}`;
       }
     });
 
@@ -70,9 +65,8 @@ exports.getRecipes = async (req, res, next) => {
       await recipe.save();
 
       // Formar la URL completa de la imagen, si existe
-      if (recipe.image) {
-        const imagePath = recipe.image.replace(/\\/g, '/');  // Reemplazar backslashes con forward slashes
-        recipe.image = `${baseImageUrl}${imagePath}`;
+      if (recipe.image && recipe.image.data) {
+        recipe.image = `data:${recipe.image.contentType};base64,${recipe.image.data.toString('base64')}`;
       }
 
       res.status(200).json({ recipe });
@@ -91,7 +85,6 @@ exports.getRecipes = async (req, res, next) => {
       }
 
       const { title, category, ingredients, instructions, preparationTime } = req.body;
-      const imagePath = req.file ? req.file.path || req.file.filename : null;
       const user = req.user;
   
       const newRecipe = new Recipe({
@@ -100,7 +93,10 @@ exports.getRecipes = async (req, res, next) => {
         ingredients,  // Si los ingredientes se envían como una cadena
         instructions,  // Si las instrucciones se envían como una cadena
         preparationTime,
-        image: imagePath,
+        image: {
+          data: req.file.buffer,  // Almacena los datos de la imagen como un buffer
+          contentType: req.file.mimetype  // Almacena el tipo de contenido (por ejemplo, 'image/jpeg')
+        },
         userId: user?.id
       });
   
@@ -116,31 +112,13 @@ exports.getRecipes = async (req, res, next) => {
     const recipeId = req.params.recipeId;
   
     try {
-      // Buscamos la receta en la base de datos
       const recipe = await Recipe.findByIdAndDelete(recipeId);
   
       if (!recipe) {
         return res.status(404).json({ message: 'Receta no encontrada' });
       }
   
-      // Obtenemos el nombre de la imagen de la receta
-      const imageName = recipe.image; // Aquí asumo que `recipe.image` es el nombre de la imagen (por ejemplo, "foto-1725984192684-268737094")
-      const imageFileName = path.basename(imageName);
-      
-      // Definimos la ruta completa de la imagen
-      const imagePath = path.join(__dirname, '../../images', imageFileName);
-  
-      // Eliminamos la imagen del servidor
-      fs.unlink(imagePath, (err) => {
-        if (err) {
-          console.error('Error al eliminar la imagen:', err);
-        } else {
-          console.log('Imagen eliminada con éxito');
-        }
-      });
-  
-      // Enviamos una respuesta exitosa
-      res.status(200).json({ message: 'Receta e imagen eliminadas con éxito' });
+      res.status(200).json({ message: 'Receta eliminada con éxito' });
     } catch (error) {
       res.status(500).json({ message: 'Error al eliminar la receta', error: error.message });
     }

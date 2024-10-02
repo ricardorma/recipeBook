@@ -41,20 +41,9 @@ app.use(function(req, res, next) {
 
 app.use('/images', express.static(path.join(__dirname, 'images')));
 
-const fileStorage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, 'images/');
-  },
-  filename: (req, file, cb) => {
-    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-    const ext = path.extname(file.originalname);
-    cb(null, file.fieldname + '-' + uniqueSuffix + ext);
-  }
-});
-
-app.use(
-  multer({ storage: fileStorage}).single('foto')
-);
+const storage = multer.memoryStorage();  // Configura multer para almacenar en memoria, no en el disco
+const upload = multer({ storage: storage });
+app.use(upload.single('foto'));  // Manejar la carga de una sola imagen
 
 // Inicio express
 app.use(express.json()); 
