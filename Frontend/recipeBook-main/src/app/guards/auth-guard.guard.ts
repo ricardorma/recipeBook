@@ -3,11 +3,13 @@ import { CanActivateFn, Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { ToastrService } from 'ngx-toastr';
 import { map, catchError, of, switchMap, take } from 'rxjs';
+import { ModalService } from '../services/modal-behaviour.service';
 
 export const authGuard: CanActivateFn = (route, state) => {
   const authService = inject(AuthService);
   const router = inject(Router);
   const toastr = inject(ToastrService);
+  const modalService = inject(ModalService);
 
   return authService.isLoggedIn().pipe(
     take(1),  // Tomamos el valor actual de loggedIn y nos desuscribimos
@@ -22,13 +24,15 @@ export const authGuard: CanActivateFn = (route, state) => {
               authService.setLoggedIn(true);  // Actualizamos el estado local
               return true;
             } else {
-              toastr.error('No tienes acceso a esta página. Inicia sesión primero.', 'Acceso denegado');
+              // Abrimos el modal de inicio de sesión en lugar de mostrar el toast
+              modalService.openModal();
               router.navigate(['/welcome'], { queryParams: { returnUrl: state.url } });
               return false;
             }
           }),
           catchError(() => {
-            toastr.error('No tienes acceso a esta página. Inicia sesión primero.', 'Acceso denegado');
+            // Abrimos el modal de inicio de sesión en lugar de mostrar el toast
+            modalService.openModal();
             router.navigate(['/welcome'], { queryParams: { returnUrl: state.url } });
             return of(false);  // En caso de error, deniega el acceso
           })
@@ -36,4 +40,5 @@ export const authGuard: CanActivateFn = (route, state) => {
       }
     })
   );
+  
 };
