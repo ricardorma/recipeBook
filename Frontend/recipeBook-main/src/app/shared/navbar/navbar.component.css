@@ -1,6 +1,8 @@
 nav {
-  background: #fdf2f4;
-  border-radius: 20px;
+  background: #fdf2f4; /* Color de fondo del navbar */
+  border-radius: 20px; /* Bordes redondeados */
+  border: 2px solid #e3d0d4; /* Borde acorde al fondo, color suave */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra ligera */
 }
 
 li {
