@@ -6,12 +6,12 @@
   
   <section>
     <div class="infoRecipe">
-      <div class="flex justify-center">
+      <div class="flex justify-center" style="text-align: -webkit-center">
         <!-- Contenedor de la imagen con efecto espejo -->
         <div class="mirror-container relative w-full md:w-2/3 lg:w-1/2 max-w-full h-auto rounded-full p-4">
           <!-- Imagen de la receta -->
           <img
-            class="w-full h-auto object-cover rounded-full shadow-lg"
+            class="w-full h-auto max-h-[400px] object-center object-cover rounded-full shadow-lg"
             [src]="$recipe()?.image"
             alt="Imagen de la receta"
           />

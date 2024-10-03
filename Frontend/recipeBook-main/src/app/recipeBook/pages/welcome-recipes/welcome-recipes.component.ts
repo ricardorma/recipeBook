@@ -12,12 +12,10 @@ import {TranslateModule} from '@ngx-translate/core';
   styleUrl: './welcome-recipes.component.css'
 })
 export default class WelcomeRecipesComponent{
-  
-  section3Visible = true;
 
   constructor(private breakpointObserver: BreakpointObserver) {}
 
-  @HostListener('window:scroll', [])
+  /*@HostListener('window:scroll', [])
   onScroll(): void {
 
     // Disable scroll logic for small and medium devices
@@ -33,5 +31,5 @@ export default class WelcomeRecipesComponent{
     if (scrollPosition > 20) {
       
     }
-  }
+  }*/
 }

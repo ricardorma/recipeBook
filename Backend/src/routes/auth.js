@@ -33,8 +33,9 @@ router.post('/logout', (req, res) => {
     // Eliminar la cookie de sesión
     res.clearCookie('connect.sid', { 
       path: '/', 
-      secure: true,  // Si estás usando HTTPS
-      sameSite: 'None'  // Necesario para entornos cross-origin
+      httpOnly: true, // Asegura que solo sea accesible a través de HTTP(S)
+      secure: process.env.NODE_ENV === 'production',  // Solo enviar en HTTPS si está en producción
+      sameSite: 'None',  // Necesario para entornos cross-origin
     });
     res.status(200).json({ message: 'Sesión cerrada con éxito' });
   });
