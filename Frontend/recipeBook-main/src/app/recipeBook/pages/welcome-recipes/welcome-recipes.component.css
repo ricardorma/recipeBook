@@ -90,7 +90,8 @@
     width: 100%; /* Ocupa el 100% del ancho para que los elementos se apilen verticalmente */
     text-align: center; /* Centra los textos */
     align-items: center;
-    gap: 2rem;
+    gap: 1rem;
+    padding: 15px 10px;
   }
 
   img {
