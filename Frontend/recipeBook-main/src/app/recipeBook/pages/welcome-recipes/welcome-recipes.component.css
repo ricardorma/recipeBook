@@ -78,35 +78,48 @@
   
 
   /*  */
-  @media screen and (max-width: 768px) {
-    .tarjetasWelcome {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-    h1, h2 {
-      font-size: 1.5rem;
-    }
-    .sectionWelcome {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      grid-template-rows: repeat(3, minmax(0, 1fr));
-    }
-    section {
-      animation: none;
-    }
+/* Aplica los cambios para pantallas pequeñas */
+@media screen and (max-width: 768px) {
+  .sectionCreate, .sectionExplore {
+    flex-direction: column; /* Cambia a columna para pantallas pequeñas */
+    align-items: center; /* Alinea los elementos al centro */
+    padding: 2rem; /* Reduce el padding */
+  }
 
+  .createP1, .createP2, .exploreP1, .exploreP2 {
+    width: 100%; /* Ocupa el 100% del ancho para que los elementos se apilen verticalmente */
+    text-align: center; /* Centra los textos */
+    align-items: center;
+    gap: 2rem;
+  }
+
+  img {
+    width: 70%; /* Ajusta el tamaño de las imágenes */
+  }
+
+  h1, h2 {
+    font-size: 1.5rem; /* Ajusta el tamaño de las fuentes */
+  }
 }
 
+/* Para pantallas muy pequeñas */
 @media screen and (max-width: 480px) {
-    .tarjetasWelcome {
-        grid-template-columns: minmax(0, 1fr);
-    }
-    h1, h2 {
-      font-size: 1.5rem;
-    }
-    .sectionWelcome {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      grid-template-rows: repeat(2, minmax(0, 1fr));
-    }
-    section {
-      animation: none;
-    }
+  .sectionCreate, .sectionExplore {
+    flex-direction: column; /* Asegura que el diseño siga siendo una columna */
+    align-items: center;
+    padding: 1rem; /* Reduce aún más el padding */
+  }
+
+  .createP1, .createP2, .exploreP1, .exploreP2 {
+    width: 100%;
+    text-align: center;
+  }
+
+  img {
+    width: 80%; /* Ajusta el tamaño de las imágenes en pantallas más pequeñas */
+  }
+
+  h1, h2 {
+    font-size: 1.2rem; /* Reduce más el tamaño de las fuentes */
+  }
 }
